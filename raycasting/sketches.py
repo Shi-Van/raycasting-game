@@ -96,4 +96,6 @@
 
 # for x in function_map:
 #     print(x)
-# SHIVAN LOVES ANNA D .
+
+# SHIVAN LOVES ANNA D.
+# And Egor loves Masha, but I don't realy know what's between them now(

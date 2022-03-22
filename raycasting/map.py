@@ -2,9 +2,10 @@ from settings import *
 import pygame
 
 text_map = [
-    'WWWWWWWWWWWWWWWWWWWWWWW',
+    'WWWWWWWWWWWWWWWWWWWWWWWWW',
     'W W               W   W',
-    'W                   W W',
+    'W W               W   W',
+    'W                     W',
     'W                     W',
     'WW                       WW',
     'W      WWW            W',

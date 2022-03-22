@@ -10,8 +10,6 @@ TILE = 100
 FPS_POS = (WIDTH - 65, 5)
 view_range = 2300
 sensitivity = 800
-egor_speed = 1
-
 
 # minimap settings
 MAP_SCALE = 5

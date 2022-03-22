@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         delt_x = delt_y = 0
         i, j = int(self.x // TILE * TILE), int(self.y // TILE * TILE)
-        if keys[pygame.K_e]:
+        if keys[pygame.K_LSHIFT]:
             player_speed = 3
         else:
             player_speed = 1.5

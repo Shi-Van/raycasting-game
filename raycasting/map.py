@@ -42,4 +42,3 @@ width_map = len(row) * MAP_TILE
 height_map = len(text_map) * MAP_TILE
 # for x in function_map:
 #     print(x)
-# SHIVAN LOVES ANNA D .

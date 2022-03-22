@@ -31,4 +31,4 @@ while True:
     pygame.display.flip()
     clock.tick()
 
-  # SHIVAN LOVES ANNA D.
+  # SHIVAN LOVES ANNA D .

@@ -12,7 +12,6 @@ text_map = [
     'W               W  W  W',
     'WWWWWWWWWWWWWWWWWWWWWWW'
 ]
-egor = 'loh'
 
 
 class Platform_minimap(pygame.sprite.Sprite):

@@ -40,5 +40,5 @@ for j, row in enumerate(text_map):
 
 width_map = len(row) * MAP_TILE
 height_map = len(text_map) * MAP_TILE
-for x in function_map:
-    print(x)
+# for x in function_map:
+#     print(x)

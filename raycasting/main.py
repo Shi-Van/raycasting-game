@@ -31,4 +31,3 @@ while True:
 
     pygame.display.flip()
     clock.tick()
-

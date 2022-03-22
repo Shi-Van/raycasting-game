@@ -33,11 +33,10 @@ class Drawing:
         dir2 = str(int(math.degrees(angle) + 15) % 360)
         render = self.font_compass1.render(dir, 1, BLACK)
         self.sc.blit(render, (WIDTH // 2, 5))
-        render = self.font_compass2.render(dir1 , 1, BLACK)
+        render = self.font_compass2.render(dir1, 1, BLACK)
         self.sc.blit(render, (WIDTH // 2 - 60, 5 + 10))
         render = self.font_compass2.render(dir2, 1, BLACK)
         self.sc.blit(render, (WIDTH // 2 + 90, 5 + 10))
-
 
     def fps(self, clock):
         display_fps = str(int(clock.get_fps()))
@@ -53,7 +52,7 @@ class Drawing:
 
         # player om mini map
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 6 * math.cos(player.angle),
-                                                 map_y + 6 * math.sin(player.angle)), 3)
+                                                               map_y + 6 * math.sin(player.angle)), 3)
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 8 * math.cos(player.angle),
                                                                map_y + 8 * math.sin(player.angle)), 1)
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)

@@ -16,7 +16,6 @@ egor_speed = 1
 # minimap settings
 MAP_SCALE = 5
 MAP_TILE = TILE // MAP_SCALE
-MAP_POS = (0, HEIGHT - HEIGHT // MAP_SCALE - MAP_SCALE)
 
 # ray casting settings
 FOV = math.pi / 3

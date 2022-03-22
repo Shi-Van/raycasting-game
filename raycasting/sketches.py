@@ -94,3 +94,8 @@
         # if ((self.x + delt_x) // TILE * TILE, (self.y + delt_y) // TILE * TILE) in world_map:
         #     delt_x = delt_y = 0
 
+# for x in function_map:
+#     print(x)
+
+# Vanya loves Anya D.
+# And Egor loves Masha, but I don't realy know what's between them now(

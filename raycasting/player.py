@@ -41,11 +41,11 @@ class Player(pygame.sprite.Sprite):
             delt_y += player_speed * cos_a
 
         rel = pygame.mouse.get_rel()
-        if keys[pygame.K_ESCAPE]:
-            pygame.mouse.set_pos(WIDTH + 10, 0)
-        else:
-            pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
-        self.angle += rel[0] * sens_koef
+        # if keys[pygame.K_ESCAPE]:
+        #     pygame.mouse.set_pos(WIDTH + 10, 0)
+        # else:
+        #     pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
+        # self.angle += rel[0] * sens_koef
 
 
         if delt_y <= 0:

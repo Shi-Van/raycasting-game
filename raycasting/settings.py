@@ -9,8 +9,8 @@ FPS = 60
 TILE = 100
 FPS_POS = (WIDTH - 65, 5)
 view_range = 2300
-sentivity = 800
-
+sensitivity = 800
+egor_speed = 1
 
 
 # minimap settings
@@ -27,17 +27,17 @@ while WIDTH % NUM_RAYS != 0:
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
-PROJ_COEFF = 3 * DIST * TILE
+PROJ_COEF = 3 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
 # player settings
 player_pos = (HALF_WIDTH + 100, HALF_HEIGHT)
 player_angle = 0
-player_speed = 1.5
+player_speed_system = 1.5
 rotation_speed = 0.005
 player_width = 25
-player_half_width = player_width //2
-sens_koef = sentivity / 800**2
+player_half_width = player_width // 2
+sens_koef = sensitivity / 800 ** 2
 
 TEXTURE_WIDTH = 1200
 TEXTURE_HEIGHT = 1200

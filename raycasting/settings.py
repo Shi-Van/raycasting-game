@@ -33,7 +33,7 @@ SCALE = WIDTH // NUM_RAYS
 # player settings
 player_pos = (HALF_WIDTH + 100, HALF_HEIGHT)
 player_angle = 0
-player_speed = 1.5
+player_speed_system = 1.5
 rotation_speed = 0.005
 player_width = 25
 player_half_width = player_width //2

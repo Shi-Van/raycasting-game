@@ -23,11 +23,11 @@ class Player(pygame.sprite.Sprite):
         cube_x_pos, cube_y_pos = int(self.x // TILE * TILE), int(self.y // TILE * TILE)
 
         if keys[pygame.K_LSHIFT]:
-            player_speed = 3
+            player_speed = player_speed_system * 2
         elif keys[pygame.K_CAPSLOCK]:
-            player_speed = 0.5
+            player_speed = player_speed_system / 3
         else:
-            player_speed = 1.5
+            player_speed = player_speed_system
 
         if keys[pygame.K_w]:
             delt_x += player_speed * cos_a

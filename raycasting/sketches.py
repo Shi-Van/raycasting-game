@@ -100,3 +100,4 @@
 # Vanya loves Anya D.
 # And Egor loves Masha, but I don't really know what's between them now(
 # LOL XD
+# смеяка

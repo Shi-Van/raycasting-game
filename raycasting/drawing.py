@@ -11,7 +11,7 @@ class Drawing:
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass1 = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass2 = pygame.font.SysFont('Arial', 20, bold=True)
-        self.texture = pygame.image.load('images/3.jpg').convert()
+        self.texture = pygame.image.load('images/wa.png').convert()
         self.texture = pygame.transform.scale(self.texture, (1200, 1200))
         self.sky_texture = pygame.image.load('images/sky.jpg').convert()
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))

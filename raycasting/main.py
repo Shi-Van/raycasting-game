@@ -1,9 +1,9 @@
 import pygame
+from shooter_pause import game_pause
 from settings import *
 from player import Player
 from drawing import Drawing
 from map import width_map, height_map
-
 pygame.init()
 pygame.display.set_caption("3d shooter")
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -11,15 +11,15 @@ sc_map = pygame.Surface((width_map, height_map))
 clock = pygame.time.Clock()
 player = Player()
 drawing = Drawing(sc, sc_map)
-pygame.mouse.set_visible(False)
+
 
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            exit()
+
+    game_pause()
     player.movement()
     sc.fill(BLACK)
 
@@ -28,6 +28,5 @@ while True:
     drawing.fps(clock)
     drawing.mini_map(player)
     drawing.compass(player.angle)
-
     pygame.display.flip()
     clock.tick()

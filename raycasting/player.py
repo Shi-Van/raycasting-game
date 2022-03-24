@@ -20,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         cos_a = math.cos(self.angle)
         keys = pygame.key.get_pressed()
         delt_x = delt_y = 0
-        i, j = int(self.x // TILE * TILE), int(self.y // TILE * TILE)
+        cube_x_pos, cube_y_pos = int(self.x // TILE * TILE), int(self.y // TILE * TILE)
         if keys[pygame.K_LSHIFT]:
             player_speed = player_speed_system * 2.5
         elif keys[pygame.K_CAPSLOCK]:
@@ -47,31 +47,33 @@ class Player(pygame.sprite.Sprite):
 
 
         if delt_y <= 0:
-            if (i, j - TILE) in world_map:
-                if j + player_width > self.y + delt_y:
-                    delt_y = j + player_width - self.y
+            if (cube_x_pos, cube_y_pos - TILE) in world_map:
+                if cube_y_pos + player_width > self.y + delt_y:
+                    delt_y = cube_y_pos + player_width - self.y
         if delt_x < 0:
-            if (i - TILE, j) in world_map:
-                if i + player_width > self.x + delt_x:
-                    delt_x = i + player_width - self.x
+            if (cube_x_pos - TILE, cube_y_pos) in world_map:
+                if cube_x_pos + player_width > self.x + delt_x:
+                    delt_x = cube_x_pos + player_width - self.x
         if delt_y > 0:
-            if (i, j + TILE) in world_map:
-                if j + TILE - player_width < self.y + delt_y:
-                    delt_y = self.y - j - TILE + player_width
+            if (cube_x_pos, cube_y_pos + TILE) in world_map:
+                if cube_y_pos + TILE - player_width < self.y + delt_y:
+                    delt_y = self.y - cube_y_pos - TILE + player_width
         if delt_x > 0:
-            if (i + TILE, j) in world_map:
-                if i + TILE - player_width < self.x + delt_x:
-                    delt_x = self.x - i - TILE + player_width
+            if (cube_x_pos + TILE, cube_y_pos) in world_map:
+                if cube_x_pos + TILE - player_width < self.x + delt_x:
+                    delt_x = self.x - cube_x_pos - TILE + player_width
 
-        if ((self.x + delt_x + player_half_width) // TILE * TILE, (self.y + delt_y + player_half_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x + player_half_width) // TILE * TILE, (self.y + delt_y - player_half_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x - player_half_width) // TILE * TILE, (self.y + delt_y + player_half_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x - player_half_width) // TILE * TILE, (self.y + delt_y - player_half_width) // TILE * TILE) in world_map:
+        if ((self.x + delt_x + player_half_width) // TILE * TILE,
+            (self.y + delt_y + player_half_width) // TILE * TILE) in world_map \
+            or ((self.x + delt_x + player_half_width) // TILE * TILE,
+                (self.y + delt_y - player_half_width) // TILE * TILE) in world_map \
+            or ((self.x + delt_x - player_half_width) // TILE * TILE,
+                (self.y + delt_y + player_half_width) // TILE * TILE) in world_map \
+            or ((self.x + delt_x - player_half_width) // TILE * TILE,
+                (self.y + delt_y - player_half_width) // TILE * TILE) in world_map:
             delt_x = delt_y = 0
 
         self.x += delt_x
         self.y += delt_y
         self.rect.centerx = self.x
         self.rect.centery = self.y
-
-

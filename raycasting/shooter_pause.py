@@ -6,7 +6,7 @@ pause = False
 def game_pause():
     global pause
     while True:
-        for event in pygame.event.get(p):
+        for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == K_ESCAPE and not pause:
                     pause = True

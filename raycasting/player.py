@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.angle += rel[0] * sens_koef
 
 
-        if delt_y <= 0:
+        if delt_y < 0:
             if (cube_x_pos, cube_y_pos - TILE) in world_map:
                 if cube_y_pos + player_width > self.y + delt_y:
                     delt_y = cube_y_pos + player_width - self.y
@@ -54,14 +54,15 @@ class Player(pygame.sprite.Sprite):
             if (cube_x_pos - TILE, cube_y_pos) in world_map:
                 if cube_x_pos + player_width > self.x + delt_x:
                     delt_x = cube_x_pos + player_width - self.x
+
         if delt_y > 0:
             if (cube_x_pos, cube_y_pos + TILE) in world_map:
                 if cube_y_pos + TILE - player_width < self.y + delt_y:
-                    delt_y = self.y - cube_y_pos - TILE + player_width
+                    delt_y = -(self.y - cube_y_pos - TILE + player_width)
         if delt_x > 0:
             if (cube_x_pos + TILE, cube_y_pos) in world_map:
                 if cube_x_pos + TILE - player_width < self.x + delt_x:
-                    delt_x = self.x - cube_x_pos - TILE + player_width
+                    delt_x = -(self.x - cube_x_pos - TILE + player_width)
 
         if ((self.x + delt_x + player_half_width) // TILE * TILE,
             (self.y + delt_y + player_half_width) // TILE * TILE) in world_map \

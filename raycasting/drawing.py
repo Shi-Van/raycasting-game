@@ -11,7 +11,7 @@ class Drawing:
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass1 = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass2 = pygame.font.SysFont('Arial', 20, bold=True)
-        self.texture = pygame.image.load('images/wa.png').convert()
+        self.texture = pygame.image.load('images/3.jpg').convert()
         self.texture = pygame.transform.scale(self.texture, (1200, 1200))
         self.sky_texture = pygame.image.load('images/sky.jpg').convert()
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))
@@ -21,7 +21,6 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos, 0))
         self.sc.blit(self.sky_texture, (sky_pos - WIDTH, 0))
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
-        # self.sc.blit(self.sky_texture, (0, 0))
         pygame.draw.rect(self.sc, GREEN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_pos, player_angle):

@@ -33,7 +33,7 @@ player_angle = 0
 player_speed_system = 3
 rotation_speed = 0.005
 player_width = 25
-player_half_width = player_width // 2
+cube_angle_width = player_width // 3
 sens_koef = sensitivity / 800 ** 2
 
 TEXTURE_WIDTH = 1200

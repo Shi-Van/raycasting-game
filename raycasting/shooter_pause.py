@@ -8,9 +8,10 @@ def game_pause():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == K_ESCAPE and not pause:
+                print(3)
+                if event.key == pygame.K_ESCAPE and not pause:
                     pause = True
-                elif event.key == K_ESCAPE:
+                elif event.key == pygame.K_ESCAPE:
                     pause = False
         if pause:
             pygame.mouse.set_visible(True)
@@ -19,10 +20,3 @@ def game_pause():
         else:
             pygame.mouse.set_visible(False)
             break
-
-
-
-
-
-
-

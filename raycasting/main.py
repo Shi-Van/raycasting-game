@@ -12,20 +12,27 @@ clock = pygame.time.Clock()
 player = Player()
 drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
-
+paused = False
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-    game_pause(sc)
-    player.movement()
-    sc.fill(BLACK)
-
-    drawing.background(player.angle)
-    drawing.world(player.pos, player.angle)
-    drawing.fps(clock)
-    drawing.mini_map(player)
-    drawing.compass(player.angle)
-    pygame.display.flip()
-    clock.tick()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and paused:
+            paused = False
+            pygame.mouse.get_rel()
+            pygame.mouse.set_visible(False)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            paused = True
+    if paused:
+        game_pause(sc)
+    else:
+        player.movement()
+        sc.fill(BLACK)
+        drawing.background(player.angle)
+        drawing.world(player.pos, player.angle)
+        drawing.fps(clock)
+        drawing.mini_map(player)
+        drawing.compass(player.angle)
+        pygame.display.flip()
+        clock.tick()

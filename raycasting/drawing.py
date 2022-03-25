@@ -74,7 +74,7 @@ class Button:
 
     def draw_button(self, x, y, message, action=None):
         mouse_position = pygame.mouse.get_pos()
-        if x <= mouse_position[0] <= x + self.width:
+        if x <= mouse_position[0] <= x + self.width and y <= mouse_position[1] <= y + self.width:
             pygame.draw.rect(self.sc, RED, (x, y, self.width, self.hieght))
         else:
             pygame.draw.rect(self.sc, GREEN, (x, y, self.width, self.hieght))

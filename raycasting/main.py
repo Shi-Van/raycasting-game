@@ -1,5 +1,5 @@
 import pygame
-from shooter_pause import game_pause
+from shooter_pause import *
 from settings import *
 from player import Player
 from drawing import *
@@ -24,6 +24,7 @@ while True:
             pygame.mouse.set_visible(False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             paused = True
+            sc.blit(sc_pause, (0, 0))
     if paused:
         game_pause(sc)
     else:

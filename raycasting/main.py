@@ -2,7 +2,7 @@ import pygame
 from shooter_pause import game_pause
 from settings import *
 from player import Player
-from drawing import Drawing
+from drawing import *
 from map import width_map, height_map
 pygame.init()
 pygame.display.set_caption("3d shooter")
@@ -11,7 +11,7 @@ sc_map = pygame.Surface((width_map, height_map))
 clock = pygame.time.Clock()
 player = Player()
 drawing = Drawing(sc, sc_map)
-
+pygame.mouse.set_visible(False)
 
 
 while True:

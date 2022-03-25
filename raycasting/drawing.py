@@ -3,6 +3,12 @@ from settings import *
 from ray_casting import ray_casting
 from map import mini_map, height_map
 
+def texting(message, text_colour, f_sys, f_size, surface, surf_weight, surf_height):
+    f_sys = pygame.font.SysFont(f_sys, f_size)
+    sc_text = f_sys.render(message, True,text_colour)
+    pos = sc_text.get_rect(center=(surf_weight // 2, surf_height // 2))
+    surface.blit(sc_text, pos)
+
 
 class Drawing:
     def __init__(self, sc, sc_map):
@@ -56,3 +62,18 @@ class Drawing:
                                                                map_y + 8 * math.sin(player.angle)), 1)
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)
         self.sc.blit(self.sc_map, (0, HEIGHT - height_map))
+class Button:
+    def __init__(self, sc, width, hieght, not_active_colour, active_colour):
+        self.sc = sc
+        self.width = width
+        self.hieght = hieght
+        self.not_active_colour = not_active_colour
+        self.active_colour = active_colour
+    def draw_button(self, x, y, message,action=None):
+        mouse_position = pygame.mouse.get_pos()
+        if x <= mouse_position[0] <= x + self.width:
+            pygame.draw.rect(self.sc, RED, (x, y, self.width, self.hieght))
+        else:
+            pygame.draw.rect(self.sc, GREEN, (x, y, self.width, self.hieght))
+
+        texting(message, RED, 'arial', 30, self.sc, x, y)

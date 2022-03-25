@@ -62,6 +62,8 @@ class Drawing:
                                                                map_y + 8 * math.sin(player.angle)), 1)
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)
         self.sc.blit(self.sc_map, (0, HEIGHT - height_map))
+
+
 class Button:
     def __init__(self, sc, width, hieght, not_active_colour, active_colour):
         self.sc = sc
@@ -69,6 +71,7 @@ class Button:
         self.hieght = hieght
         self.not_active_colour = not_active_colour
         self.active_colour = active_colour
+
     def draw_button(self, x, y, message,action=None):
         mouse_position = pygame.mouse.get_pos()
         if x <= mouse_position[0] <= x + self.width:

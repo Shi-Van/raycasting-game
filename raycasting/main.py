@@ -19,7 +19,7 @@ while True:
         if event.type == pygame.QUIT:
             exit()
 
-    game_pause()
+    game_pause(sc)
     player.movement()
     sc.fill(BLACK)
 

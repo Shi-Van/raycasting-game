@@ -72,7 +72,7 @@ class Button:
         self.not_active_colour = not_active_colour
         self.active_colour = active_colour
 
-    def draw_button(self, x, y, message,action=None):
+    def draw_button(self, x, y, message, action=None):
         mouse_position = pygame.mouse.get_pos()
         if x <= mouse_position[0] <= x + self.width:
             pygame.draw.rect(self.sc, RED, (x, y, self.width, self.hieght))

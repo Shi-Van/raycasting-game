@@ -48,10 +48,13 @@ BLACK = (0, 0, 0)
 RED = (220, 0, 0)
 GREEN = (0, 80, 0)
 BLUE = (0, 0, 255)
-DARKGRAY = (40, 40, 40)
+DARKGREY = (40, 40, 40)
 PURPLE = (120, 0, 120)
 SKYBLUE = (0, 186, 255)
 YELLOW = (220, 220, 0)
-not_active_colour, active_colour = BLUE, PURPLE
+LIGHTGREY = (80, 80, 80)
+GREY = (70, 70, 70)
+not_active_colour, active_colour = LIGHTGREY, GREY
 
 ind_hit = [(1, 1), (-1, -1), (0, 1), (1, 0), (0, -1), (-1, 0), (1, -1), (-1, 1)]
+

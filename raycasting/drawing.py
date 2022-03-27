@@ -24,7 +24,7 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos, 0))
         self.sc.blit(self.sky_texture, (sky_pos - WIDTH, 0))
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
-        pygame.draw.rect(self.sc, DARKGRAY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
+        pygame.draw.rect(self.sc, DARKGREY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_pos, player_angle):
         ray_casting(self.sc, player_pos, player_angle, self.texture)
@@ -60,25 +60,3 @@ class Drawing:
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)
         self.sc.blit(self.sc_map, (0, HEIGHT - height_map))
 
-
-class Button:
-    def __init__(self, sc, width, hieght):
-        self.sc = sc
-        self.width = width
-        self.height = hieght
-        self.rect =
-
-    def draw_button(self, x, y, message, action=None):
-        mouse_position = pygame.mouse.get_pos()
-        if (x <= mouse_position[0] <= x + self.width) and (y <= mouse_position[1] <= y + self.height):
-            pygame.draw.rect(self.sc, active_colour, (x, y, self.width, self.height))
-        else:
-            pygame.draw.rect(self.sc, not_active_colour, (x, y, self.width, self.height))
-
-        self.texting(message, RED, 'arial', 30, self.sc)
-
-    def texting(self, message, text_colour, f_sys, f_size, surface):
-        f_sys = pygame.font.SysFont(f_sys, f_size)
-        sc_text = f_sys.render(message, True, text_colour)
-        pos = sc_text.get_rect(center=self.rect.center)
-        surface.blit(sc_text, pos)

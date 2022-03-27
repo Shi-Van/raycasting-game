@@ -3,10 +3,11 @@ from settings import *
 from ray_casting import ray_casting
 from map import mini_map, height_map
 
-def texting(message, text_colour, f_sys, f_size, surface, surf_weight, surf_height):
+
+def texting(message, text_colour, f_sys, f_size, surface, surf):
     f_sys = pygame.font.SysFont(f_sys, f_size)
-    sc_text = f_sys.render(message, True,text_colour)
-    pos = sc_text.get_rect(center=(surf_weight // 2, surf_height // 2))
+    sc_text = f_sys.render(message, True, text_colour)
+    pos = sc_text.get_rect(center=surf.rect.center)
     surface.blit(sc_text, pos)
 
 
@@ -68,15 +69,14 @@ class Button:
     def __init__(self, sc, width, hieght, not_active_colour, active_colour):
         self.sc = sc
         self.width = width
-        self.hieght = hieght
-        self.not_active_colour = not_active_colour
-        self.active_colour = active_colour
+        self.height = hieght
+        self.rect =
 
     def draw_button(self, x, y, message, action=None):
         mouse_position = pygame.mouse.get_pos()
-        if (x <= mouse_position[0] <= x + self.width) and (y <= mouse_position[1] <= y + self.hieght):
-            pygame.draw.rect(self.sc, self.active_colour, (x, y, self.width, self.hieght))
+        if (x <= mouse_position[0] <= x + self.width) and (y <= mouse_position[1] <= y + self.height):
+            pygame.draw.rect(self.sc, active_colour, (x, y, self.width, self.height))
         else:
-            pygame.draw.rect(self.sc, self.not_active_colour, (x, y, self.width, self.hieght))
+            pygame.draw.rect(self.sc, not_active_colour, (x, y, self.width, self.height))
 
-        texting(message, RED, 'arial', 30, self.sc, WIDTH, HEIGHT)
+        texting(message, RED, 'arial', 30, self.sc, self)

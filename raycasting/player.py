@@ -29,6 +29,13 @@ class Player(pygame.sprite.Sprite):
             player_speed = player_speed_system
 
         if keys[pygame.K_w]:
+            if keys[pygame.K_a] or keys[pygame.K_d]:
+                player_speed = player_speed ** 0.5
+        elif keys[pygame.K_s]:
+            if keys[pygame.K_a] or keys[pygame.K_d]:
+                player_speed = player_speed ** 0.5
+
+        if keys[pygame.K_w]:
             delt_x += player_speed * cos_a
             delt_y += player_speed * sin_a
         if keys[pygame.K_s]:
@@ -44,7 +51,6 @@ class Player(pygame.sprite.Sprite):
         rel = pygame.mouse.get_rel()
         pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
         self.angle += rel[0] * sens_koef
-
 
         if delt_y <= 0:
             if (cube_x_pos, cube_y_pos - TILE) in world_map:
@@ -77,5 +83,3 @@ class Player(pygame.sprite.Sprite):
         self.y += delt_y
         self.rect.centerx = self.x
         self.rect.centery = self.y
-
-

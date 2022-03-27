@@ -1,4 +1,3 @@
-from player import *
 from buttons import *
 sc_pause = pygame.Surface((WIDTH, HEIGHT))
 sc_pause.fill(DARKGREY)

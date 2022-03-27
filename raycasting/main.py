@@ -3,12 +3,11 @@ from shooter_pause import *
 from settings import *
 from player import Player
 from drawing import *
-from map import width_map, height_map
 from buttons import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
-sc_map = pygame.Surface((width_map, height_map))
+sc_map = pygame.Surface((MAP_SIZE, MAP_SIZE))
 clock = pygame.time.Clock()
 player = Player()
 drawing = Drawing(sc, sc_map)

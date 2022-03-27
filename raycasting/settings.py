@@ -1,8 +1,8 @@
 import math
 
 # game settings
-WIDTH = 1200
-HEIGHT = 800
+WIDTH = 1280
+HEIGHT = 720
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 60
@@ -14,6 +14,8 @@ sensitivity = 800
 # minimap settings
 MAP_SCALE = 5
 MAP_TILE = TILE // MAP_SCALE
+MAP_SIZE = MAP_TILE * 10
+HALF_MAP_SIZE = MAP_SIZE // 2
 
 # ray casting settings
 FOV = math.pi / 3
@@ -24,7 +26,7 @@ while WIDTH % NUM_RAYS != 0:
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
-PROJ_COEF = 3 * DIST * TILE
+PROJ_COEF = 4 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
 # player settings

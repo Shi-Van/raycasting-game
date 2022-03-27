@@ -38,5 +38,5 @@ for j, row in enumerate(text_map):
             # function_map[j][i] = pf
             mini_map.append(pf_minimap)
 
-width_map = len(text_map[0]) * MAP_TILE
-height_map = len(text_map) * MAP_TILE
+# width_map = len(text_map[0]) * MAP_TILE
+# height_ma = len(text_map) * MAP_TILE

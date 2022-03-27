@@ -4,11 +4,7 @@ from ray_casting import ray_casting
 from map import mini_map, height_map
 
 
-def texting(message, text_colour, f_sys, f_size, surface, surf):
-    f_sys = pygame.font.SysFont(f_sys, f_size)
-    sc_text = f_sys.render(message, True, text_colour)
-    pos = sc_text.get_rect(center=surf.rect.center)
-    surface.blit(sc_text, pos)
+
 
 
 class Drawing:
@@ -66,7 +62,7 @@ class Drawing:
 
 
 class Button:
-    def __init__(self, sc, width, hieght, not_active_colour, active_colour):
+    def __init__(self, sc, width, hieght):
         self.sc = sc
         self.width = width
         self.height = hieght
@@ -79,4 +75,10 @@ class Button:
         else:
             pygame.draw.rect(self.sc, not_active_colour, (x, y, self.width, self.height))
 
-        texting(message, RED, 'arial', 30, self.sc, self)
+        self.texting(message, RED, 'arial', 30, self.sc)
+
+    def texting(self, message, text_colour, f_sys, f_size, surface):
+        f_sys = pygame.font.SysFont(f_sys, f_size)
+        sc_text = f_sys.render(message, True, text_colour)
+        pos = sc_text.get_rect(center=self.rect.center)
+        surface.blit(sc_text, pos)

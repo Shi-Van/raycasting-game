@@ -24,9 +24,10 @@ while True:
             pygame.mouse.set_visible(False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             paused = True
+            bg_image = sc.copy()
             sc.blit(sc_pause, (0, 0))
     if paused:
-        game_pause(sc)
+        game_pause(sc, bg_image)
     else:
         player.movement()
         sc.fill(BLACK)

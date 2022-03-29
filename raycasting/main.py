@@ -4,7 +4,7 @@ from drawing import *
 from buttons import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
-sc = pygame.display.set_mode((WIDTH, HEIGHT))
+sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 sc_map = pygame.Surface((MAP_SIZE, MAP_SIZE))
 clock = pygame.time.Clock()
 player = Player()
@@ -13,13 +13,15 @@ pygame.mouse.set_visible(False)
 paused = False
 #buttons
 pause_button = Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2)
-exit_button = Button(sc, 50, 50, WIDTH, HEIGHT - 50)
+exit_button = Button(sc, 50, 50, WIDTH - 50, 50)
 #buttons actions
 def pausebutton_active():
     global paused
     paused = False
     pygame.mouse.set_visible(False)
     pygame.mouse.get_rel()
+def pauseexit_active():
+    exit()
 
 while True:
     for event in pygame.event.get():
@@ -34,8 +36,7 @@ while True:
             bg_image = sc.copy()
             sc.blit(sc_pause, (0, 0))
     if paused:
-        game_pause(sc, bg_image, pause_button, pausebutton_active)
-
+        game_pause(sc, bg_image, pause_button, pausebutton_active, exit_button, pauseexit_active)
     else:
         player.movement()
         sc.fill(BLACK)

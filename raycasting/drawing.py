@@ -58,4 +58,4 @@ class Drawing:
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 8 * math.cos(player.angle),
                                                                map_y + 8 * math.sin(player.angle)), 1)
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)
-        self.sc.blit(self.sc_map, (WIDTH - MAP_SIZE, 0))
+        self.sc.blit(self.sc_map, (WIDTH - MAP_SIZE - 10, 10))

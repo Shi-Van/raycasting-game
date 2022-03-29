@@ -27,18 +27,21 @@ class Button:
         pos = sc_text.get_rect(center=self.rect.center)
         surface.blit(sc_text, pos)
 
-# Shooter_Pause
+#Pause_button
 sc_pause = pygame.Surface((WIDTH, HEIGHT))
 sc_pause.fill(DARKGREY)
 sc_pause.set_alpha(128)
 
 
-def game_pause(sc, bg_image, pause_button, action):
+
+def game_pause(sc, bg_image, pause_button, action, exit_button, action2):
     pygame.mouse.set_visible(True)
     sc.blit(bg_image, (0, 0))
     sc.blit(sc_pause, (0, 0))
     pause_button.draw_button('PAUSE', action)
-    pygame.display.flip()
+    exit_button.draw_button('X', action2)
 
+
+    pygame.display.flip()
 
 

@@ -9,13 +9,13 @@ class Button:
         self.rect.center = (x, y)
         self.message_size = hieght // 2
 
-    def draw_button(self, message, action=None):
+    def draw_button(self, message, action_act=None):
         mouse_position = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         if (self.rect.x <= mouse_position[0] <= self.rect.bottomright[0]) and (self.rect.y <= mouse_position[1] <= self.rect.bottomright[1]):
             pygame.draw.rect(self.sc, active_colour, self.rect)
-            if action != None and click[0] == 1:
-                return 1
+            if click[0] and action_act is not None:
+                action_act()
         else:
             pygame.draw.rect(self.sc, not_active_colour, self.rect)
 

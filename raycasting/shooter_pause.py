@@ -4,9 +4,9 @@ sc_pause.fill(DARKGREY)
 sc_pause.set_alpha(128)
 
 
-def game_pause(sc, bg_image, pause_button):
+def game_pause(sc, bg_image, pause_button, action):
     pygame.mouse.set_visible(True)
     sc.blit(bg_image, (0, 0))
     sc.blit(sc_pause, (0, 0))
-    pause_button.draw_button('PAUSE')
+    pause_button.draw_button('PAUSE', action)
     pygame.display.flip()

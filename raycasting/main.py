@@ -1,5 +1,4 @@
 import pygame
-from shooter_pause import *
 from player import Player
 from drawing import *
 from buttons import *
@@ -14,6 +13,7 @@ pygame.mouse.set_visible(False)
 paused = False
 #buttons
 pause_button = Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2)
+exit_button = Button(sc, 50, 50, WIDTH, HEIGHT - 50)
 #buttons actions
 def pausebutton_active():
     global paused
@@ -35,6 +35,7 @@ while True:
             sc.blit(sc_pause, (0, 0))
     if paused:
         game_pause(sc, bg_image, pause_button, pausebutton_active)
+
     else:
         player.movement()
         sc.fill(BLACK)

@@ -21,7 +21,7 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos, 0))
         self.sc.blit(self.sky_texture, (sky_pos - WIDTH, 0))
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
-        pygame.draw.rect(self.sc, DARKGREY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
+        pygame.draw.rect(self.sc, GREEN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_pos, player_angle):
         ray_casting(self.sc, player_pos, player_angle, self.texture)

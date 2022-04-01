@@ -1,8 +1,10 @@
 import math
 
 # game settings
-WIDTH = 1280
-HEIGHT = 720
+# WIDTH = 1280
+# HEIGHT = 720
+WIDTH = 1920
+HEIGHT = 1080
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 60
@@ -26,7 +28,7 @@ while WIDTH % NUM_RAYS != 0:
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
 DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
-PROJ_COEF = 4 * DIST * TILE
+PROJ_COEF = 6 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
 # player settings
@@ -35,7 +37,7 @@ player_angle = 0
 player_speed_system = 3
 rotation_speed = 0.005
 player_width = 25
-player_half_width = 12.5
+player_half_width = player_width / 2
 cube_angle_width = player_width // 3
 sens_koef = sensitivity / 800 ** 2
 

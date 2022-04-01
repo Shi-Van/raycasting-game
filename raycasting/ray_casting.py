@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from map import world_map, view_range
+from threading import Thread
 
 
 def mapping(a, b):
@@ -13,6 +14,19 @@ def ray_casting(sc, player_pos, player_angle, texture):
     cur_angle = player_angle - HALF_FOV
     depth_h = depth_v = yv = xh = 0
     for ray in range(NUM_RAYS):
+        ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)
+        cur_angle += DELTA_ANGLE
+    # for mob in mobs:
+    #     angle = (mob.mob_angle(player_pos) - player_angle) % (2 * math.pi)
+    #     if 0 <= angle <= FOV:
+    #         ray = angle // DELTA_ANGLE
+    #         dist = mob.mob_distance(player_pos)
+    #         mob_height = int((PROJ_COEF / 1.5) / dist)
+    #         pygame.draw.rect(sc, BLUE, (ray * SCALE - mob_height // 2, HALF_HEIGHT - mob_height // 2, (ray * SCALE + mob_height // 2, HALF_HEIGHT + mob_height // 2)))
+
+
+def ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle):
+        # print(ray, 'start')
         sin_a = math.sin(cur_angle)
         cos_a = math.cos(cur_angle)
         sin_a = sin_a if sin_a else 0.000001
@@ -43,9 +57,7 @@ def ray_casting(sc, player_pos, player_angle, texture):
         depth *= math.cos(player_angle - cur_angle)
         proj_height = int(PROJ_COEF / depth)
 
-        wall_vertical = pygame.transform.scale(texture.subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE, TEXTURE_HEIGHT), (SCALE, proj_height))
-        # z = min(int(PROJ_COEF / depth), HEIGHT)
-        # wall_vertical =  wall_vertical.subsurface(0, (proj_height - z) / 2, SCALE, (proj_height + z) / 2)
+        wall_vertical = pygame.transform.scale(texture.subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
+                                                                  TEXTURE_HEIGHT), (SCALE, proj_height))
         sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
-
-        cur_angle += DELTA_ANGLE
+        # print(ray, 'stop')

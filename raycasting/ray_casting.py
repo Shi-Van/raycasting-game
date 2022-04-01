@@ -26,7 +26,6 @@ def ray_casting(sc, player_pos, player_angle, texture):
 
 
 def ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle):
-        # print(ray, 'start')
         sin_a = math.sin(cur_angle)
         cos_a = math.cos(cur_angle)
         sin_a = sin_a if sin_a else 0.000001
@@ -60,4 +59,3 @@ def ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, 
         wall_vertical = pygame.transform.scale(texture.subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
                                                                   TEXTURE_HEIGHT), (SCALE, proj_height))
         sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
-        # print(ray, 'stop')

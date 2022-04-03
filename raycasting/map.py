@@ -19,12 +19,6 @@ class Platform_minimap(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.rect = pygame.Rect(x, y, MAP_TILE, MAP_TILE)
 
-# class Platform(pygame.sprite.Sprite):
-#     def __init__(self, x, y):
-#         pygame.sprite.Sprite.__init__(self)
-#         self.rect = pygame.Rect(x, y, TILE, TILE)
-
-
 world_map = set()
 mini_map = []
 function_map = []
@@ -33,10 +27,11 @@ for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char == 'W':
             pf_minimap = Platform_minimap(i * MAP_TILE, j * MAP_TILE)
-            # pf = Platform(i * TILE, j * TILE)
             world_map.add((i * TILE, j * TILE))
-            # function_map[j][i] = pf
             mini_map.append(pf_minimap)
+
+mini_map_texture = pygame.Surface((MAP_SIZE, MAP_SIZE))
+
 
 # width_map = len(text_map[0]) * MAP_TILE
 # height_ma = len(text_map) * MAP_TILE

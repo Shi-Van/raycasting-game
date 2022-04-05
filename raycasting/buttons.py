@@ -3,28 +3,30 @@ from settings import *
 
 
 class Button:
-    def __init__(self, sc, width, height, x, y):
+    def __init__(self, sc, width, height, x, y, function, text):
         self.sc = sc
         self.rect = pygame.Rect(x, y, width, height)
         self.rect.center = (x, y)
         self.message_size = height // 2
+        self.function = function
+        self.text = text
 
-    def draw_button(self, message, action_act=None):
+    def draw_button(self):
         mouse_position = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         if (self.rect.x <= mouse_position[0] <= self.rect.bottomright[0]) and \
                 (self.rect.y <= mouse_position[1] <= self.rect.bottomright[1]):
             pygame.draw.rect(self.sc, active_colour, self.rect)
-            if click[0] and action_act is not None:
-                action_act()
+            if click[0]:
+                self.function()
         else:
             pygame.draw.rect(self.sc, not_active_colour, self.rect)
 
-        self.texting(message, WHITE, 'arial', self.message_size, self.sc)
+        self.texting(WHITE, 'arial', self.message_size, self.sc)
 
-    def texting(self, message, text_colour, f_sys, f_size, surface):
+    def texting(self, text_colour, f_sys, f_size, surface):
         f_sys = pygame.font.SysFont(f_sys, f_size)
-        sc_text = f_sys.render(message, True, text_colour)
+        sc_text = f_sys.render(self.text, True, text_colour)
         pos = sc_text.get_rect(center=self.rect.center)
         surface.blit(sc_text, pos)
 
@@ -35,23 +37,12 @@ sc_pause.fill(DARKGREY)
 sc_pause.set_alpha(128)
 
 
-def game_pause(sc, bg_image, pause_button, action, exit_button, action2):
+def game_pause(sc, bg_image, buttons):
     pygame.mouse.set_visible(True)
     sc.blit(bg_image, (0, 0))
     sc.blit(sc_pause, (0, 0))
-    pause_button.draw_button('PAUSE', action)
-    exit_button.draw_button('X', action2)
+    for button in buttons:
+        button.draw_button()
+        button.draw_button()
 
     pygame.display.flip()
-
-
-# buttons actions
-def pause_button_active():
-    global paused
-    paused = False
-    pygame.mouse.set_visible(False)
-    pygame.mouse.get_rel()
-
-
-def exit_button_active():
-    exit()

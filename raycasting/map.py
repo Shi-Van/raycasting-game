@@ -19,6 +19,7 @@ class Platform_minimap(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.rect = pygame.Rect(x, y, MAP_TILE, MAP_TILE)
 
+
 world_map = set()
 mini_map = []
 function_map = []

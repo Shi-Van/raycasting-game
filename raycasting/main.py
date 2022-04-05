@@ -11,9 +11,26 @@ player = Player()
 drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
+
+
 # buttons
-pause_button = Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2)
-exit_button = Button(sc, 50, 50, WIDTH - 50, 50)
+def pause_button_active():
+    global paused
+    paused = False
+    print(1)
+    pygame.mouse.set_visible(False)
+    pygame.mouse.get_rel()
+
+
+def exit_button_active():
+    exit()
+
+
+buttons = []
+# pause_button
+buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'PAUSE')]
+# exit_button
+buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 
 
 while True:
@@ -29,7 +46,7 @@ while True:
             bg_image = sc.copy()
             sc.blit(sc_pause, (0, 0))
     if paused:
-        game_pause(sc, bg_image, pause_button, pause_button_active, exit_button, exit_button_active)
+        game_pause(sc, bg_image, buttons)
     else:
         player.movement()
         sc.fill(BLACK)

@@ -13,7 +13,7 @@ pygame.mouse.set_visible(False)
 paused = False
 
 
-# buttons
+# buttons functions
 def pause_button_active():
     global paused
     paused = False

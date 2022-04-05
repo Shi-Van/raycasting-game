@@ -43,6 +43,5 @@ def game_pause(sc, bg_image, buttons):
     sc.blit(sc_pause, (0, 0))
     for button in buttons:
         button.draw_button()
-        button.draw_button()
 
     pygame.display.flip()

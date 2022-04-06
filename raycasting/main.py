@@ -17,7 +17,6 @@ paused = False
 def pause_button_active():
     global paused
     paused = False
-    print(1)
     pygame.mouse.set_visible(False)
     pygame.mouse.get_rel()
 
@@ -28,7 +27,7 @@ def exit_button_active():
 
 buttons = []
 # pause_button
-buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'PAUSE')]
+buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 

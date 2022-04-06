@@ -1,10 +1,12 @@
 import math
+from screeninfo import get_monitors
 
 # game settings
-WIDTH = 1280
-HEIGHT = 720
-# WIDTH = 1920
-# HEIGHT = 1080
+WIDTH = 0
+HEIGHT = 0
+for m in get_monitors():
+    WIDTH = m.width if m.width > WIDTH else WIDTH
+    HEIGHT = m.height if m.height > HEIGHT else HEIGHT
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
 FPS = 144
@@ -22,12 +24,14 @@ HALF_MAP_SIZE = MAP_SIZE // 2
 # ray casting settings
 FOV = math.pi / 3
 HALF_FOV = FOV / 2
-NUM_RAYS = 400
-while WIDTH % NUM_RAYS != 0:
-    NUM_RAYS -= 10
+NUM_RAYS = 479
+# while WIDTH % NUM_RAYS != 0:
+#     NUM_RAYS -= 10
+print(NUM_RAYS)
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
-DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
+# DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
+DIST = WIDTH / (8 * math.tan(HALF_FOV))
 PROJ_COEF = 4 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
@@ -61,4 +65,3 @@ GREY = (70, 70, 70)
 not_active_colour, active_colour = LIGHTGREY, GREY
 
 ind_hit = [(1, 1), (-1, -1), (0, 1), (1, 0), (0, -1), (-1, 0), (1, -1), (-1, 1)]
-

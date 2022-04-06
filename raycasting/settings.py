@@ -24,9 +24,9 @@ HALF_MAP_SIZE = MAP_SIZE // 2
 # ray casting settings
 FOV = math.pi / 3
 HALF_FOV = FOV / 2
-NUM_RAYS = 479
-# while WIDTH % NUM_RAYS != 0:
-#     NUM_RAYS -= 10
+NUM_RAYS = 540
+while WIDTH % NUM_RAYS != 0:
+    NUM_RAYS -= 10
 print(NUM_RAYS)
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS

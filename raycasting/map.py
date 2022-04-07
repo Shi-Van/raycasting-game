@@ -2,15 +2,15 @@ from settings import *
 import pygame
 
 text_map = [
-    'WWWWWWWWWWWWWWWWWWWWWWW',
-    'W W               W   W',
-    'W                 W   W',
-    'W                     W',
-    'W                     W',
-    'WW                    W',
-    'W      WWW            W',
-    'W               W  W  W',
-    'WWWWWWWWWWWWWWWWWWWWWWW'
+    '11111111111111111111111',
+    '1 2               2   1',
+    '1                 2   1',
+    '1                     1',
+    '1                     1',
+    '12                    1',
+    '1      222            1',
+    '1               2  2  1',
+    '11111111111111111111111'
 ]
 
 
@@ -20,16 +20,15 @@ class PlatformMinimap(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x, y, MAP_TILE, MAP_TILE)
 
 
-world_map = set()
+world_map = {}
 mini_map = []
-function_map = []
 for j, row in enumerate(text_map):
-    function_map += [list(row)]
     for i, char in enumerate(row):
-        if char == 'W':
+        if char != ' ':
             pf_minimap = PlatformMinimap(i * MAP_TILE, j * MAP_TILE)
-            world_map.add((i * TILE, j * TILE))
             mini_map.append(pf_minimap)
+            world_map[(i * TILE, j * TILE)] = char
+
 
 mini_map_texture = pygame.Surface((MAP_SIZE, MAP_SIZE))
 

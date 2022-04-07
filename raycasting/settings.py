@@ -9,7 +9,7 @@ for m in get_monitors():
     HEIGHT = m.height if m.height > HEIGHT else HEIGHT
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
-FPS = 144
+FPS = 60
 TILE = 100
 FPS_POS = (35, 5)
 view_range = 2300
@@ -37,7 +37,7 @@ SCALE = WIDTH // NUM_RAYS
 # player settings
 player_pos = (HALF_WIDTH + 100, HALF_HEIGHT)
 player_angle = 0
-player_speed_system = 3
+player_speed_system = 6
 rotation_speed = 0.005
 player_width = 25
 player_half_width = player_width / 2

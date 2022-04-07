@@ -30,9 +30,8 @@ while WIDTH % NUM_RAYS != 0:
 print(NUM_RAYS)
 MAX_DEPTH = 800
 DELTA_ANGLE = FOV / NUM_RAYS
-# DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
 DIST = WIDTH / (8 * math.tan(HALF_FOV))
-PROJ_COEF = 4 * DIST * TILE
+PROJ_COEF = 4.4 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
 # player settings

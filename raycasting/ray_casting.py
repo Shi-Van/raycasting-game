@@ -14,6 +14,8 @@ def ray_casting(sc, player_pos, player_angle, texture):
     cur_angle = player_angle - HALF_FOV
     depth_h = depth_v = yv = xh = 0
     for ray in range(NUM_RAYS):
+        # th = Thread(target=ray_counting, args=(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle))
+        # th.start()
         ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)
         cur_angle += DELTA_ANGLE
     # for mob in mobs:

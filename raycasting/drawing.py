@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from ray_casting import ray_casting
-from map import mini_map
+from map import map_image, mini_map
 
 
 class Drawing:
@@ -43,14 +43,13 @@ class Drawing:
         self.sc.blit(render, FPS_POS)
 
     def mini_map(self, player):
-        self.sc_map.fill(DARKGREY)
+        self.sc_map.fill(LIGHTGREY)
         map_x, map_y = player.rect.centerx // MAP_SCALE, player.rect.centery // MAP_SCALE
         x_offset = map_x - HALF_MAP_SIZE
         y_offset = map_y - HALF_MAP_SIZE
         map_x = map_y = HALF_MAP_SIZE
 
-        for platform in mini_map:
-            pygame.draw.rect(self.sc_map, LIGHTGREY, (platform.rect.x - x_offset, platform.rect.y - y_offset , MAP_TILE, MAP_TILE))
+        self.sc_map.blit(map_image, (-x_offset, -y_offset))
 
         # player om mini map
         pygame.draw.line(self.sc_map,YELLOW, (map_x, map_y), (map_x + 6 * math.cos(player.angle),

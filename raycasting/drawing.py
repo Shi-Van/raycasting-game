@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from ray_casting import ray_casting
-from map import mini_map
+from map import map_image, mini_map
 
 
 class Drawing:
@@ -11,8 +11,9 @@ class Drawing:
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass1 = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass2 = pygame.font.SysFont('Arial', 20, bold=True)
-        self.texture = pygame.image.load('images/wa.png').convert()
-        self.texture = pygame.transform.scale(self.texture, (1200, 1200))
+        self.textures = {'1': pygame.image.load('images/3.jpg').convert(),
+                         '2': pygame.image.load('images/2.png').convert()}
+        # self.texture = pygame.transform.scale(self.texture, (1200, 1200))
         self.sky_texture = pygame.image.load('images/sky.jpg').convert()
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))
 
@@ -24,7 +25,7 @@ class Drawing:
         pygame.draw.rect(self.sc, GREEN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_pos, player_angle):
-        ray_casting(self.sc, player_pos, player_angle, self.texture)
+        ray_casting(self.sc, player_pos, player_angle, self.textures)
 
     def compass(self, angle):
         dir = str(int(math.degrees(angle)) % 360)
@@ -43,17 +44,16 @@ class Drawing:
         self.sc.blit(render, FPS_POS)
 
     def mini_map(self, player):
-        self.sc_map.fill(DARKGREY)
+        self.sc_map.fill(LIGHTGREY)
         map_x, map_y = player.rect.centerx // MAP_SCALE, player.rect.centery // MAP_SCALE
         x_offset = map_x - HALF_MAP_SIZE
         y_offset = map_y - HALF_MAP_SIZE
         map_x = map_y = HALF_MAP_SIZE
 
-        for platform in mini_map:
-            pygame.draw.rect(self.sc_map, LIGHTGREY, (platform.rect.x - x_offset, platform.rect.y - y_offset , MAP_TILE, MAP_TILE))
+        self.sc_map.blit(map_image, (-x_offset, -y_offset))
 
         # player om mini map
-        pygame.draw.line(self.sc_map,YELLOW, (map_x, map_y), (map_x + 6 * math.cos(player.angle),
+        pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 6 * math.cos(player.angle),
                                                                map_y + 6 * math.sin(player.angle)), 3)
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 8 * math.cos(player.angle),
                                                                map_y + 8 * math.sin(player.angle)), 1)

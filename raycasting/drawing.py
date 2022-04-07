@@ -26,8 +26,8 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
         pygame.draw.rect(self.sc, GREEN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
-    def world(self, player_pos, player_angle):
-        ray_casting(self.sc, player_pos, player_angle, self.textures)
+    def world(self, player_pos, player_angle, mobs):
+        ray_casting(self.sc, player_pos, player_angle, self.textures, mobs)
 
     def compass(self, angle):
         dir = str(int(math.degrees(angle)) % 360)

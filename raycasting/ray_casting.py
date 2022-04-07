@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from map import world_map, view_range
+from mobs import *
 from threading import Thread
 
 
@@ -8,7 +9,7 @@ def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
 
-def ray_casting(sc, player_pos, player_angle, texture):
+def ray_casting(sc, player_pos, player_angle, texture, mobs):
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
     cur_angle = player_angle - HALF_FOV
@@ -18,13 +19,15 @@ def ray_casting(sc, player_pos, player_angle, texture):
         # th.start()
         ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)
         cur_angle += DELTA_ANGLE
-    # for mob in mobs:
-    #     angle = (mob.mob_angle(player_pos) - player_angle) % (2 * math.pi)
-    #     if 0 <= angle <= FOV:
-    #         ray = angle // DELTA_ANGLE
-    #         dist = mob.mob_distance(player_pos)
-    #         mob_height = int((PROJ_COEF / 1.5) / dist)
-    #         pygame.draw.rect(sc, BLUE, (ray * SCALE - mob_height // 2, HALF_HEIGHT - mob_height // 2, (ray * SCALE + mob_height // 2, HALF_HEIGHT + mob_height // 2)))
+    for mob in mobs:
+        angle = (mob.mob_angle(player_pos) - player_angle) % (2 * math.pi)
+        if 0 <= angle <= FOV:
+            ray = angle // DELTA_ANGLE
+            dist = mob.mob_distance(player_pos)
+            mob_height = int((PROJ_COEF / 1.5) / dist)
+            mob_rect = pygame.Rect(0, 0, mob_height, mob_height)
+            mob_rect.center = (ray * SCALE, HALF_HEIGHT)
+            pygame.draw.rect(sc, BLUE, mob_rect)
 
 
 def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, player_angle):

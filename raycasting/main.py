@@ -1,4 +1,6 @@
 import pygame
+
+from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
@@ -11,6 +13,8 @@ player = Player()
 drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
+mob = Mobs((500, 500), 1)
+mobs = [mob]
 
 
 # buttons functions
@@ -50,7 +54,7 @@ while True:
         player.movement()
         sc.fill(BLACK)
         drawing.background(player.angle)
-        drawing.world(player.pos, player.angle)
+        drawing.world(player.pos, player.angle, mobs)
         drawing.fps(clock)
         drawing.mini_map(player)
         drawing.compass(player.angle)

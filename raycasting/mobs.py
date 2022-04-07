@@ -10,7 +10,7 @@ class Mobs(pygame.sprite.Sprite):
 
     def mob_distance(self, pl_pos):
         pl_x, pl_y = pl_pos
-        dist = ((pl_x - self.x)**2 + (pl_y - self.y)**2)**1 // 2
+        dist = ((pl_x - self.x)**2 + (pl_y - self.y)**2)**0.5
         return dist
 
     def mob_angle(self, player_position):

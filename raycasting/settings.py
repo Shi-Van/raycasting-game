@@ -24,7 +24,7 @@ HALF_MAP_SIZE = MAP_SIZE // 2
 # ray casting settings
 FOV = math.pi / 3
 HALF_FOV = FOV / 2
-NUM_RAYS = 540
+NUM_RAYS = 500
 while WIDTH % NUM_RAYS != 0:
     NUM_RAYS -= 10
 print(NUM_RAYS)

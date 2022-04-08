@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from ray_casting import ray_casting
-from map import map_image, mini_map
+from map import map_image
 
 
 class Drawing:
@@ -26,23 +26,23 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
         pygame.draw.rect(self.sc, GREEN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
-    def world(self, player_pos, player_angle, mobs):
-        ray_casting(self.sc, player_pos, player_angle, self.textures, mobs)
+    def world(self, player_position, player_angle, mobs):
+        ray_casting(self.sc, player_position, player_angle, self.textures, mobs)
 
     def compass(self, angle):
         dir = str(int(math.degrees(angle)) % 360)
         dir1 = str(int(math.degrees(angle) - 15) % 360)
         dir2 = str(int(math.degrees(angle) + 15) % 360)
-        render = self.font_compass1.render(dir, 1, BLACK)
+        render = self.font_compass1.render(dir, True, BLACK)
         self.sc.blit(render, (WIDTH // 2, 5))
-        render = self.font_compass2.render(dir1, 1, BLACK)
+        render = self.font_compass2.render(dir1, True, BLACK)
         self.sc.blit(render, (WIDTH // 2 - 60, 5 + 10))
-        render = self.font_compass2.render(dir2, 1, BLACK)
+        render = self.font_compass2.render(dir2, True, BLACK)
         self.sc.blit(render, (WIDTH // 2 + 90, 5 + 10))
 
     def fps(self, clock):
         display_fps = str(int(clock.get_fps()))
-        render = self.font.render(display_fps, 0, RED)
+        render = self.font.render(display_fps, True, RED)
         self.sc.blit(render, FPS_POS)
 
     def mini_map(self, player):

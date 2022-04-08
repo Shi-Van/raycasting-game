@@ -3,10 +3,10 @@ import pygame
 
 
 class Mobs(pygame.sprite.Sprite):
-    def __init__(self, position, mtype):
+    def __init__(self, position, mob_type):
         pygame.sprite.Sprite.__init__(self)
         self.x, self.y = position
-        self.mob_type = mtype
+        self.mob_type = mob_type
         self.image = pygame.image.load('images/авыва.png').convert()
 
     def mob_distance(self, pl_pos):
@@ -15,12 +15,13 @@ class Mobs(pygame.sprite.Sprite):
         return dist
 
     def mob_angle(self, player_position):
-        if player_position[0] >= self.x and player_position[1] <= self.y:
-            angle = math.pi - math.atan((player_position[1] - self.y) / (self.x - player_position[0] + 0.000001))
-        elif player_position[0] >= self.x and player_position[1] >= self.y:
-            angle = math.pi + math.atan((player_position[1] - self.y) / (player_position[0] - self.x + 0.000001))
-        elif player_position[0] <= self.x and player_position[1] >= self.y:
-            angle = (math.pi * (3 / 2)) + math.atan((self.x - player_position[0]) / (player_position[1] - self.y + 0.000001))
-        elif player_position[0] <= self.x and player_position[1] <= self.y:
-            angle = math.atan((self.y - player_position[1]) / (self.x - player_position[0] + 0.000001))
+        player_x, player_y = player_position
+        if player_x >= self.x and player_y <= self.y:
+            angle = math.pi - math.atan((player_y - self.y) / (self.x - player_x + 0.000001))
+        elif player_x >= self.x and player_y >= self.y:
+            angle = math.pi + math.atan((player_y - self.y) / (player_x - self.x + 0.000001))
+        elif player_x <= self.x and player_y >= self.y:
+            angle = 1.5 * math.pi + math.atan((self.x - player_x) / (player_y - self.y + 0.000001))
+        else:
+            angle = math.atan((self.y - player_y) / (self.x - player_x + 0.000001))
         return angle

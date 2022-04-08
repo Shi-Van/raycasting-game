@@ -22,7 +22,7 @@ def ray_casting(sc, player_position, direction_angle, texture, mobs):
             ray = angle // DELTA_ANGLE
             dist = mob.mob_distance(player_position)
             if dist <= rays_depth[int(ray) - 1]:
-                mob_height = int((PROJ_COEF / 1.5) / dist)
+                mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
                 mob_im = pygame.transform.scale(mob.image, (mob_height, mob_height))
                 mob_rect = mob_im.get_rect()
                 # if dist <= rays_depth[int((ray * SCALE - mob_height / 2) // SCALE) - 1]:

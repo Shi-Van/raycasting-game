@@ -2,6 +2,7 @@ from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
+from map import opened_map_image, opened_map
 pygame.init()
 pygame.display.set_caption("3d shooter")
 sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
@@ -12,6 +13,7 @@ player = Player()
 drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
+map_open = False
 mob = Mobs((500, 500), 1)
 mobs = [mob]
 
@@ -39,16 +41,29 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and paused:
+        # map screen
+        if event.type == pygame.KEYDOWN and map_open and (event.key == pygame.K_m or event.key == pygame.K_ESCAPE):
+            map_open = False
+            pygame.mouse.get_rel()
+            pygame.mouse.set_visible(False)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+            map_open = True
+            bg_image = sc.copy()
+            pygame.mouse.set_visible(True)
+        # pause screen
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and paused:
             paused = False
             pygame.mouse.get_rel()
             pygame.mouse.set_visible(False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             paused = True
             bg_image = sc.copy()
-            sc.blit(sc_pause, (0, 0))
+            pygame.mouse.set_visible(True)
+
     if paused:
         game_pause(sc, bg_image, buttons)
+    elif map_open:
+        open_map(sc, bg_image, opened_map, opened_map_image, player.pos, player.angle)
     else:
         player.movement()
         sc.fill(BLACK)

@@ -1,5 +1,3 @@
-import pygame
-
 from mobs import Mobs
 from player import Player
 from drawing import *

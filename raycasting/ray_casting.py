@@ -1,8 +1,6 @@
-import pygame
-from settings import *
-from map import world_map, view_range
+
+from map import world_map
 from mobs import *
-from threading import Thread
 
 
 def mapping(a, b):
@@ -16,8 +14,6 @@ def ray_casting(sc, player_pos, player_angle, texture, mobs):
     depth_h = depth_v = yv = xh = 0
     rays_depth = []
     for ray in range(NUM_RAYS):
-        # th = Thread(target=ray_counting, args=(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle))
-        # th.start()
         rays_depth += [ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)]
         cur_angle += DELTA_ANGLE
     for mob in mobs:

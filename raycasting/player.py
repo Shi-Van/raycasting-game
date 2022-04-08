@@ -1,4 +1,3 @@
-from settings import *
 from map import *
 import pygame
 

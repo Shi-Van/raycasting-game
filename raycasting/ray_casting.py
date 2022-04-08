@@ -14,20 +14,26 @@ def ray_casting(sc, player_pos, player_angle, texture, mobs):
     xm, ym = mapping(ox, oy)
     cur_angle = player_angle - HALF_FOV
     depth_h = depth_v = yv = xh = 0
+    rays_depth = []
     for ray in range(NUM_RAYS):
         # th = Thread(target=ray_counting, args=(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle))
         # th.start()
-        ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)
+        rays_depth += [ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, player_angle)]
         cur_angle += DELTA_ANGLE
     for mob in mobs:
-        angle = (mob.mob_angle(player_pos) - player_angle) % (2 * math.pi)
+        angle = (mob.mob_angle(player_pos) - (player_angle - HALF_FOV)) % (2 * math.pi)
         if 0 <= angle <= FOV:
             ray = angle // DELTA_ANGLE
+            ray1 = angle // DELTA_ANGLE
+            ray2 = angle // DELTA_ANGLE
             dist = mob.mob_distance(player_pos)
-            mob_height = int((PROJ_COEF / 1.5) / dist)
-            mob_rect = pygame.Rect(0, 0, mob_height, mob_height)
-            mob_rect.center = (ray * SCALE, HALF_HEIGHT)
-            pygame.draw.rect(sc, BLUE, mob_rect)
+            if dist <= rays_depth[int(ray) - 1]:
+                mob_height = int((PROJ_COEF / 1.5) / dist)
+                mob_im = pygame.transform.scale(mob.image, (mob_height, mob_height))
+                mob_rect = mob_im.get_rect()
+                # if dist <= rays_depth[int((ray * SCALE - mob_height / 2) // SCALE) - 1]:
+                mob_rect.center = (ray * SCALE, HALF_HEIGHT)
+                sc.blit(mob_im, mob_rect)
 
 
 def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, player_angle):
@@ -68,3 +74,4 @@ def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v,
         wall_vertical = pygame.transform.scale(textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
                                                                   TEXTURE_HEIGHT), (SCALE, proj_height))
         sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
+        return depth

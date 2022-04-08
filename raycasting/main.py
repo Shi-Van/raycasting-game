@@ -7,6 +7,7 @@ from buttons import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
 sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+sc = pygame.display.set_mode((WIDTH, HEIGHT))
 sc_map = pygame.Surface((MAP_SIZE, MAP_SIZE))
 clock = pygame.time.Clock()
 player = Player()

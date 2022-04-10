@@ -26,13 +26,14 @@ class Player(pygame.sprite.Sprite):
             player_speed = player_speed_system // 3
         else:
             player_speed = player_speed_system
+        player_side_speed = player_speed
 
         if keys[pygame.K_w]:
             if keys[pygame.K_a] or keys[pygame.K_d]:
-                player_speed = player_speed ** 0.5
+                player_side_speed = player_speed / 3
         elif keys[pygame.K_s]:
             if keys[pygame.K_a] or keys[pygame.K_d]:
-                player_speed = player_speed ** 0.5
+                player_side_speed = player_speed / 3
 
         if keys[pygame.K_w]:
             delt_x += player_speed * cos_a
@@ -41,16 +42,17 @@ class Player(pygame.sprite.Sprite):
             delt_x += -player_speed * cos_a
             delt_y += -player_speed * sin_a
         if keys[pygame.K_a]:
-            delt_x += player_speed * sin_a
-            delt_y += -player_speed * cos_a
+            delt_x += player_side_speed * sin_a
+            delt_y += -player_side_speed * cos_a
         if keys[pygame.K_d]:
-            delt_x += -player_speed * sin_a
-            delt_y += player_speed * cos_a
+            delt_x += -player_side_speed * sin_a
+            delt_y += player_side_speed * cos_a
 
         rel = pygame.mouse.get_rel()
         pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
         self.angle += rel[0] * sens_koef
 
+        # collide with walls
         if delt_y <= 0:
             if (cube_x_pos, cube_y_pos - TILE) in world_map:
                 if cube_y_pos + player_width > self.y + delt_y:
@@ -68,6 +70,7 @@ class Player(pygame.sprite.Sprite):
                 if cube_x_pos + TILE - player_width < self.x + delt_x:
                     delt_x = -(self.x - cube_x_pos - TILE + player_width)
 
+        # collide with angles
         if ((self.x + delt_x + cube_angle_width) // TILE * TILE,
             (self.y + delt_y + cube_angle_width) // TILE * TILE) in world_map \
             or ((self.x + delt_x + cube_angle_width) // TILE * TILE,

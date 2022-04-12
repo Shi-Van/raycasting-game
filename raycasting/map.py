@@ -1,5 +1,8 @@
 from settings import *
 import pygame
+# from numba import int32
+# from numba.core import types
+# from numba.typed import Dict
 
 with open('map.txt', 'r') as m:
     text_map = m.readlines()
@@ -31,6 +34,7 @@ map_image.fill(DARKGREY)
 for platform in mini_map:
     pygame.draw.rect(map_image, LIGHTGREY, (platform.rect.x, platform.rect.y, MAP_TILE, MAP_TILE))
 map_scale = min(WIDTH / (width_map * 2), HEIGHT / (height_map * 2))
+
 opened_map = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image.fill(DARKGREY)

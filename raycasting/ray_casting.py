@@ -2,11 +2,12 @@ from map import world_map
 from mobs import *
 
 
+@njit(fastmath=True)
 def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
 
-def ray_casting(sc, player_position, direction_angle, texture, mobs):
+def ray_casting(sc, player_position, direction_angle, textures, mobs):
     ox, oy = player_position
     xm, ym = mapping(ox, oy)
     cur_angle = direction_angle - HALF_FOV
@@ -14,22 +15,22 @@ def ray_casting(sc, player_position, direction_angle, texture, mobs):
     rays_depth = []
     for ray in range(NUM_RAYS):
         rays_depth += [
-            ray_counting(xm, ox, ym, oy, ray, sc, texture, cur_angle, depth_h, depth_v, yv, xh, direction_angle)]
+            ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, direction_angle)]
         cur_angle += DELTA_ANGLE
+
     for mob in mobs:
         angle = (mob.mob_angle(player_position) - (direction_angle - HALF_FOV)) % (2 * math.pi)
         if 0 <= angle <= FOV:
             ray = angle // DELTA_ANGLE
             dist = mob.mob_distance(player_position)
-            if dist <= rays_depth[int(ray) - 1]:
-                mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
-                mob_im = pygame.transform.scale(mob.image, (mob_height, mob_height))
-                mob_rect = mob_im.get_rect()
-                # if dist <= rays_depth[int((ray * SCALE - mob_height / 2) // SCALE) - 1]:
-                mob_rect.center = (ray * SCALE, HALF_HEIGHT)
-                sc.blit(mob_im, mob_rect)
+            mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
+            rays_depth += [(dist, mob.type, mob_height, ray, mob)]
+
+    rays_depth.sort(reverse=True)
+    screen_blit(rays_depth, textures, sc)
 
 
+# @njit(fastmath=True)
 def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, direction_angle):
     sin_a = math.sin(cur_angle)
     cos_a = math.cos(cur_angle)
@@ -66,7 +67,24 @@ def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v,
     depth *= math.cos(direction_angle - cur_angle)
     proj_height = int(PROJ_COEF / depth)
 
-    wall_vertical = pygame.transform.scale(textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
-                                                                        TEXTURE_HEIGHT), (SCALE, proj_height))
-    sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
-    return depth
+    # screen_blit(textures, texture, offset, proj_height, ray, sc)
+    # wall_vertical = pygame.transform.scale(textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
+    #                                                                     TEXTURE_HEIGHT), (SCALE, proj_height))
+    # sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
+    return depth, 0, texture, offset, proj_height, ray
+
+
+def screen_blit(rays_depth, textures, sc):
+    for object in rays_depth:
+        if object[1] == 0:
+            dist, type, texture, offset, proj_height, ray = object
+            wall_vertical = pygame.transform.scale(
+                textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
+                                             TEXTURE_HEIGHT), (SCALE, proj_height))
+            sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
+        else:
+            dist, type, mob_height, ray, mob = object
+            mob_im = pygame.transform.scale(mob.image, (mob_height, mob_height))
+            mob_rect = mob_im.get_rect()
+            mob_rect.center = (ray * SCALE, HALF_HEIGHT)
+            sc.blit(mob_im, mob_rect)

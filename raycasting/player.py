@@ -1,4 +1,5 @@
 from map import *
+from numba import njit
 import pygame
 
 
@@ -52,36 +53,44 @@ class Player(pygame.sprite.Sprite):
         pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
         self.angle += rel[0] * sens_koef
 
-        # collide with walls
-        if delt_y <= 0:
-            if (cube_x_pos, cube_y_pos - TILE) in world_map:
-                if cube_y_pos + player_width > self.y + delt_y:
-                    delt_y = cube_y_pos + player_width - self.y
-        if delt_x < 0:
-            if (cube_x_pos - TILE, cube_y_pos) in world_map:
-                if cube_x_pos + player_width > self.x + delt_x:
-                    delt_x = cube_x_pos + player_width - self.x
-        if delt_y > 0:
-            if (cube_x_pos, cube_y_pos + TILE) in world_map:
-                if cube_y_pos + TILE - player_width < self.y + delt_y:
-                    delt_y = -(self.y - cube_y_pos - TILE + player_width)
-        if delt_x > 0:
-            if (cube_x_pos + TILE, cube_y_pos) in world_map:
-                if cube_x_pos + TILE - player_width < self.x + delt_x:
-                    delt_x = -(self.x - cube_x_pos - TILE + player_width)
-
-        # collide with angles
-        if ((self.x + delt_x + cube_angle_width) // TILE * TILE,
-            (self.y + delt_y + cube_angle_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x + cube_angle_width) // TILE * TILE,
-                (self.y + delt_y - cube_angle_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x - cube_angle_width) // TILE * TILE,
-                (self.y + delt_y + cube_angle_width) // TILE * TILE) in world_map \
-            or ((self.x + delt_x - cube_angle_width) // TILE * TILE,
-                (self.y + delt_y - cube_angle_width) // TILE * TILE) in world_map:
-            delt_x = delt_y = 0
+        delt_x, delt_y = collide(delt_y, delt_x, cube_y_pos, cube_x_pos, self.x, self.y)
 
         self.x += delt_x
         self.y += delt_y
         self.rect.centerx = self.x
         self.rect.centery = self.y
+
+
+# @njit(fastmath=True)
+def collide(delt_y, delt_x, cube_y_pos, cube_x_pos, x, y):
+
+    # collide with walls
+    if delt_y <= 0:
+        if (cube_x_pos, cube_y_pos - TILE) in world_map:
+            if cube_y_pos + player_width > y + delt_y:
+                delt_y = cube_y_pos + player_width - y
+    if delt_x < 0:
+        if (cube_x_pos - TILE, cube_y_pos) in world_map:
+            if cube_x_pos + player_width > x + delt_x:
+                delt_x = cube_x_pos + player_width - x
+    if delt_y > 0:
+        if (cube_x_pos, cube_y_pos + TILE) in world_map:
+            if cube_y_pos + TILE - player_width < y + delt_y:
+                delt_y = -(y - cube_y_pos - TILE + player_width)
+    if delt_x > 0:
+        if (cube_x_pos + TILE, cube_y_pos) in world_map:
+            if cube_x_pos + TILE - player_width < x + delt_x:
+                delt_x = -(x - cube_x_pos - TILE + player_width)
+
+    # collide with angles
+    if ((x + delt_x + cube_angle_width) // TILE * TILE,
+        (y + delt_y + cube_angle_width) // TILE * TILE) in world_map \
+            or ((x + delt_x + cube_angle_width) // TILE * TILE,
+                (y + delt_y - cube_angle_width) // TILE * TILE) in world_map \
+            or ((x + delt_x - cube_angle_width) // TILE * TILE,
+                (y + delt_y + cube_angle_width) // TILE * TILE) in world_map \
+            or ((x + delt_x - cube_angle_width) // TILE * TILE,
+                (y + delt_y - cube_angle_width) // TILE * TILE) in world_map:
+        delt_x = delt_y = 0
+
+    return delt_x, delt_y

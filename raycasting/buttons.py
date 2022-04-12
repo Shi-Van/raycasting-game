@@ -57,7 +57,7 @@ def open_map(sc, bg_image, opened_map, opened_map_image, player_pos, angle):
     # player om map
     pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 8 * map_scale * math.cos(angle),
                                                           map_y + 8 * map_scale * math.sin(angle)), int(1 * map_scale))
-    pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), 5 * map_scale)
+    pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), max(5 * map_scale, 5))
 
     map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
     sc.blit(opened_map, map_rect)

@@ -12,7 +12,7 @@ HALF_HEIGHT = HEIGHT // 2
 FPS = 60
 TILE = 100
 FPS_POS = (35, 5)
-view_range = 2300
+view_range = 3300
 sensitivity = 800
 
 # minimap settings

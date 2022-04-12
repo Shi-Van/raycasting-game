@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
             player_speed = player_speed_system // 3
         else:
             player_speed = player_speed_system
-        player_side_speed = player_speed
+        player_side_speed = player_speed / 1.5
 
         if keys[pygame.K_w]:
             if keys[pygame.K_a] or keys[pygame.K_d]:

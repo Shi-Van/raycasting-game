@@ -14,7 +14,7 @@ drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
 map_open = False
-mob = Mobs((500, 500), 1)
+mob = Mobs((3000, 4000), 1)
 mobs = [mob]
 
 

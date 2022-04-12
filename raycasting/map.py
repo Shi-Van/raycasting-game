@@ -1,21 +1,42 @@
 from settings import *
 import pygame
 
-text_map = [
-    '11111111111111111111111',
-    '1 2               2   1',
-    '1                 2   1',
-    '1                     1',
-    '1                     1',
-    '1                     1',
-    '1                     1',
-    '1      2  2           1',
-    '1                     1',
-    '12    2    2          1',
-    '1      2222           1',
-    '1               2  2  1',
-    '11111111111111111111111'
-]
+with open('map.txt', 'r') as m:
+    text_map = m.readlines()
+# text_map = [
+#     '1111111111111111111111111111111111111111 1',
+#     '1                  1            111111 1 1',
+#     '1 1111111111111111 1 111 111111        1 1',
+#     '1 1 1 1        1 1 1 1 1 11   1111111111 1',
+#     '1 1              1 1 1 1                 1',
+#     '1 1    11        1     1 11   111111111  1',
+#     '1 1              1 1 111 111111       1111',
+#     '1 1              1 1 1            111    1',
+#     '1 1           11 1 1 1            1   11 1',
+#     '1 1         111  1 1 11111111111111 1111 1',
+#     '1 1 1 1     1    1 1                1    1',
+#     '1 11111   111    1 1 11111111111111 1    1 ',
+#     '1 1  111111      1 1   1     1  1   1    1',
+#     '1 1  1          1  1 1 1 1   1  1 1 1    1',
+#     '1 1 11 11 11111111 1 1   1   1    1 111111',
+#     '1 1    1           1 11111   1  1 1      1',
+#     '1 111111 11111111111 1   1   1111 1 1111 1',
+#     '1                    1   1        1 111111',
+#     '11111111 111111111 111   11111111 1      1',
+#     '11     1 1      1   11        1 1 1     11',
+#     '11     1 1      1                   1111 1',
+#     '11     1    11  1   1111 1111 1 111  111 1',
+#     '11     1 1  11  11111         1 1111     1',
+#     '11 11111 1      1   1  1 1111 1 1111111111',
+#     '11       1            11 1111 1        111',
+#     '11111 1 111111 11111111   111 1        111',
+#     '1     1 1    1   1    1 1 111 1          1',
+#     '1 111 1 11111111    1 1   1   1        1 1',
+#     '1   1 1          1  1   1   1 1        1 1',
+#     '1   11111111 111111111111111111        1 1',
+#     '1                            11        1 1',
+#     '1111111111111111111111111111 1111111111111',
+# ]
 
 
 class PlatformMinimap(pygame.sprite.Sprite):
@@ -43,8 +64,9 @@ map_image = pygame.Surface((width_map, height_map))
 map_image.fill(DARKGREY)
 for platform in mini_map:
     pygame.draw.rect(map_image, LIGHTGREY, (platform.rect.x, platform.rect.y, MAP_TILE, MAP_TILE))
-opened_map = pygame.Surface((width_map * 2, height_map * 2))
-opened_map_image = pygame.Surface((width_map * 2, height_map * 2))
+map_scale = min(WIDTH / (width_map * 2), HEIGHT / (height_map * 2))
+opened_map = pygame.Surface((width_map * map_scale, height_map * map_scale))
+opened_map_image = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image.fill(DARKGREY)
 for platform in mini_map:
-    pygame.draw.rect(opened_map_image, LIGHTGREY, (platform.rect.x * 2, platform.rect.y * 2, MAP_TILE * 2, MAP_TILE * 2))
+    pygame.draw.rect(opened_map_image, LIGHTGREY, (platform.rect.x * map_scale, platform.rect.y * map_scale, MAP_TILE * map_scale, MAP_TILE * map_scale))

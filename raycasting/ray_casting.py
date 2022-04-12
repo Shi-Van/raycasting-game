@@ -35,7 +35,7 @@ def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v,
     cos_a = math.cos(cur_angle)
     sin_a = sin_a if sin_a else 0.000001
     cos_a = cos_a if cos_a else 0.000001
-    texture_hor = texture_ver = 0
+    texture_hor = texture_ver = '1'
 
     # verticals
     x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)

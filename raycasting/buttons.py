@@ -1,4 +1,5 @@
 import pygame
+from map import map_scale
 from settings import *
 
 
@@ -51,12 +52,12 @@ def open_map(sc, bg_image, opened_map, opened_map_image, player_pos, angle):
     sc.blit(bg_image, (0, 0))
     opened_map.blit(opened_map_image, (0, 0))
     map_x, map_y = player_pos
-    map_x, map_y = map_x // MAP_SCALE * 2, map_y // MAP_SCALE * 2
+    map_x, map_y = map_x // MAP_SCALE * map_scale, map_y // MAP_SCALE * map_scale
 
     # player om map
-    pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 16 * math.cos(angle),
-                                                          map_y + 16 * math.sin(angle)), 3)
-    pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), 10)
+    pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 8 * map_scale * math.cos(angle),
+                                                          map_y + 8 * map_scale * math.sin(angle)), int(1 * map_scale))
+    pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), 5 * map_scale)
 
     map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
     sc.blit(opened_map, map_rect)

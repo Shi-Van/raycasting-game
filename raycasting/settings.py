@@ -35,7 +35,7 @@ PROJ_COEF = 4.4 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 
 # player settings
-player_pos = (HALF_WIDTH + 100, HALF_HEIGHT)
+player_pos = (5700, 6300)
 player_angle = 0
 player_speed_system = 6
 rotation_speed = 0.005

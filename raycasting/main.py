@@ -47,6 +47,7 @@ while True:
             pygame.mouse.get_rel()
             pygame.mouse.set_visible(False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+            print(player.pos)
             map_open = True
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)

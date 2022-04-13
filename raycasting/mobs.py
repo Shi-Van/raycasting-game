@@ -8,7 +8,7 @@ class Mobs(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.x, self.y = position
         self.type = mob_type
-        self.image = pygame.image.load('images/воловик.png').convert()
+        self.image = pygame.image.load('images/воловик.png').convert_alpha()
 
     def mob_distance(self, pl_pos):
         return dist_calc(self.x, self.y, pl_pos)
@@ -20,8 +20,10 @@ class Mobs(pygame.sprite.Sprite):
 @njit(fastmath=True)
 def angle_calc(x, y, player_position):
     player_x, player_y = player_position
-    if player_x >= x and player_y <= y:
+    if player_x > x and player_y <= y:
         angle = math.pi - math.atan((player_y - y) / (x - player_x + 0.000001))
+    elif player_x == x and player_y <= y:
+        angle = math.pi / 2
     elif player_x >= x and player_y >= y:
         angle = math.pi + math.atan((player_y - y) / (player_x - x + 0.000001))
     elif player_x <= x and player_y >= y:

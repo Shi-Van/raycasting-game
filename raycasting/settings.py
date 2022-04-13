@@ -36,7 +36,7 @@ SCALE = WIDTH // NUM_RAYS
 
 # player settings
 player_pos = (5700, 6300)
-player_angle = 0
+player_angle = 1.5 * math.pi
 player_speed_system = 6
 rotation_speed = 0.005
 player_width = 25

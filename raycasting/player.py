@@ -1,5 +1,5 @@
 from map import *
-from numba import njit
+# from numba import njit
 import pygame
 
 

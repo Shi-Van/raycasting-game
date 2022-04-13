@@ -48,10 +48,10 @@ def game_pause(sc, bg_image, buttons):
 
 
 # open map
-def open_map(sc, bg_image, opened_map, opened_map_image, player_pos, angle):
+def open_map(sc, bg_image, opened_map, opened_map_image, player_position, angle):
     sc.blit(bg_image, (0, 0))
     opened_map.blit(opened_map_image, (0, 0))
-    map_x, map_y = player_pos
+    map_x, map_y = player_position
     map_x, map_y = map_x // MAP_SCALE * map_scale, map_y // MAP_SCALE * map_scale
 
     # player om map

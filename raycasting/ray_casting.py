@@ -15,7 +15,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
     rays_depth = []
     for ray in range(NUM_RAYS):
         rays_depth += [
-            ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, direction_angle)]
+            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle)]
         cur_angle += DELTA_ANGLE
 
     for mob in mobs:
@@ -31,7 +31,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
 
 
 # @njit(fastmath=True)
-def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v, yv, xh, direction_angle):
+def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle):
     sin_a = math.sin(cur_angle)
     cos_a = math.cos(cur_angle)
     sin_a = sin_a if sin_a else 0.000001
@@ -67,23 +67,19 @@ def ray_counting(xm, ox, ym, oy, ray, sc, textures, cur_angle, depth_h, depth_v,
     depth *= math.cos(direction_angle - cur_angle)
     proj_height = int(PROJ_COEF / depth)
 
-    # screen_blit(textures, texture, offset, proj_height, ray, sc)
-    # wall_vertical = pygame.transform.scale(textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
-    #                                                                     TEXTURE_HEIGHT), (SCALE, proj_height))
-    # sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
     return depth, 0, texture, offset, proj_height, ray
 
 
 def screen_blit(rays_depth, textures, sc):
-    for object in rays_depth:
-        if object[1] == 0:
-            dist, type, texture, offset, proj_height, ray = object
+    for game_object in rays_depth:
+        if game_object[1] == 0:
+            dist, wall_type, texture, offset, proj_height, ray = game_object
             wall_vertical = pygame.transform.scale(
                 textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
                                              TEXTURE_HEIGHT), (SCALE, proj_height))
             sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
         else:
-            dist, type, mob_height, ray, mob = object
+            dist, mob_type, mob_height, ray, mob = game_object
             mob_im = pygame.transform.scale(mob.image, (mob_height, mob_height))
             mob_rect = mob_im.get_rect()
             mob_rect.center = (ray * SCALE, HALF_HEIGHT)

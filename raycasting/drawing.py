@@ -15,7 +15,7 @@ class Drawing:
                          '2': pygame.image.load('images/remn_wall1.png').convert()}
         for i in self.textures:
             self.textures[i] = pygame.transform.scale(self.textures[i], (1200, 1200))
-        self.sky_texture = pygame.image.load('images/sky.jpg').convert()
+        self.sky_texture = pygame.image.load('images/sky1.jpg').convert()
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))
 
     def background(self, angle):

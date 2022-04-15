@@ -5,6 +5,8 @@ from buttons import *
 from map import opened_map_image, opened_map
 pygame.init()
 pygame.display.set_caption("3d shooter")
+# x = pygame.image.load('images/game-1.png').convert()
+# sc.blit(x, (0, 0))
 sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 bg_image = sc.copy()
 sc_map = pygame.Surface((MAP_SIZE, MAP_SIZE))

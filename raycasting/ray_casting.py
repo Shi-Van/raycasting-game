@@ -20,11 +20,19 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
 
     for mob in mobs:
         angle = (mob.mob_angle(player_position) - (direction_angle - HALF_FOV)) % (2 * math.pi)
-        if 0 <= angle <= FOV:
+        if 0 <= angle <= FOV + 200 * DELTA_ANGLE:
             ray = angle / DELTA_ANGLE
             dist = mob.mob_distance(player_position)
+            dist *= math.cos(direction_angle - cur_angle)
             mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
             rays_depth += [(dist, mob.type, mob_height, ray, mob)]
+        elif - 200 * DELTA_ANGLE <= angle - 2 * math.pi:
+            ray = (angle - 2 * math.pi) / DELTA_ANGLE
+            dist = mob.mob_distance(player_position)
+            dist *= math.cos(direction_angle - cur_angle)
+            mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
+            rays_depth += [(dist, mob.type, mob_height, ray, mob)]
+
 
     rays_depth.sort(reverse=True)
     screen_blit(rays_depth, textures, sc)

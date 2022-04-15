@@ -33,7 +33,6 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
             mob_height = int((PROJ_COEF / 1.5) / (dist + 0.00001))
             rays_depth += [(dist, mob.type, mob_height, ray, mob)]
 
-
     rays_depth.sort(reverse=True)
     screen_blit(rays_depth, textures, sc)
 

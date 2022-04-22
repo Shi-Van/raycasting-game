@@ -3,6 +3,7 @@ from player import Player
 from drawing import *
 from buttons import *
 from map import opened_map_image, opened_map, world_map
+
 pygame.init()
 pygame.display.set_caption("3d shooter")
 # x = pygame.image.load('images/game-1.png').convert()

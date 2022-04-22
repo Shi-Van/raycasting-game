@@ -1,4 +1,3 @@
-from map import world_map
 from mobs import *
 
 
@@ -7,7 +6,7 @@ def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
 
-def ray_casting(sc, player_position, direction_angle, textures, mobs, world_map):
+def ray_casting(sc, player_position, direction_angle, textures, mobs, worldmap):
     ox, oy = player_position
     xm, ym = mapping(ox, oy)
     cur_angle = direction_angle - HALF_FOV
@@ -15,7 +14,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs, world_map)
     rays_depth = []
     for ray in range(NUM_RAYS):
         rays_depth += [
-            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, world_map)]
+            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, worldmap)]
         cur_angle += DELTA_ANGLE
 
     for mob in mobs:
@@ -38,7 +37,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs, world_map)
 
 
 @njit(fastmath=True)
-def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, world_map):
+def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, worldmap):
     sin_a = math.sin(cur_angle)
     cos_a = math.cos(cur_angle)
     sin_a = sin_a if sin_a else 0.000001
@@ -51,8 +50,8 @@ def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direc
         depth_v = (x - ox) / cos_a
         yv = oy + depth_v * sin_a
         tile_v = mapping(x + dx, yv)
-        if tile_v in world_map:
-            texture_ver = world_map[tile_v]
+        if tile_v in worldmap:
+            texture_ver = worldmap[tile_v]
             break
         x += dx * TILE
 
@@ -62,8 +61,8 @@ def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direc
         depth_h = (y - oy) / sin_a
         xh = ox + depth_h * cos_a
         tile_h = mapping(xh, y + dy)
-        if tile_h in world_map:
-            texture_hor = world_map[tile_h]
+        if tile_h in worldmap:
+            texture_hor = worldmap[tile_h]
             break
         y += dy * TILE
 

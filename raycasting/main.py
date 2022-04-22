@@ -18,6 +18,11 @@ paused = False
 map_open = False
 mob = Mobs((3000, 4000), 1)
 mobs = [mob]
+pygame.mixer.init()
+pause_music = False
+pygame.mixer.music.load('music\doom.mp3')
+pygame.mixer.music.play(1)
+pygame.mixer.music.fadeout(10)
 
 
 # buttons functions
@@ -37,7 +42,6 @@ buttons = []
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
-
 
 while True:
     for event in pygame.event.get():
@@ -62,12 +66,21 @@ while True:
             paused = True
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
-
+    if paused and not pause_music:
+        pygame.mixer.music.pause()
+        pygame.mixer.music.load('music\Alexander Nakarada - Chase.mp3')
+        pygame.mixer.music.play(1)
+    if not paused:
+        pause_music = False
+        pygame.mixer.music.stop()
     if paused:
         game_pause(sc, bg_image, buttons)
+        pause_music = True
+
     elif map_open:
         open_map(sc, bg_image, opened_map, opened_map_image, player.pos, player.angle)
     else:
+        pygame.mixer.music.unpause()
         player.movement()
         sc.fill(BLACK)
         drawing.background(player.angle)

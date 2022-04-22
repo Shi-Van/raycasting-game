@@ -81,9 +81,16 @@ def screen_blit(rays_depth, textures, sc):
     for game_object in rays_depth:
         if game_object[1] == 0:
             dist, wall_type, texture, offset, proj_height, ray = game_object
-            wall_vertical = pygame.transform.scale(
-                textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
-                                             TEXTURE_HEIGHT), (SCALE, proj_height))
+            if proj_height >= HEIGHT:
+                offset2 = (TEXTURE_HEIGHT / (proj_height / HEIGHT))
+                proj_height = HEIGHT
+                wall_vertical = textures[texture].subsurface(offset * TEXTURE_SCALE, (TEXTURE_HEIGHT - offset2) // 2,
+                                                             TEXTURE_SCALE, offset2)
+                wall_vertical = pygame.transform.scale(wall_vertical, (SCALE, proj_height))
+            else:
+                wall_vertical = pygame.transform.scale(
+                    textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE,
+                                                 TEXTURE_HEIGHT), (SCALE, proj_height))
             sc.blit(wall_vertical, (ray * SCALE, HALF_HEIGHT - proj_height // 2))
         else:
             dist, mob_type, mob_height, ray, mob = game_object

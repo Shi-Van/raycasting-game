@@ -1,8 +1,8 @@
 from settings import *
 import pygame
-# from numba import int32
-# from numba.core import types
-# from numba.typed import Dict
+from numba.core import types
+from numba.typed import Dict
+from numba import int32
 
 with open('map.txt', 'r') as m:
     text_map = m.readlines()
@@ -14,14 +14,14 @@ class PlatformMinimap(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x, y, MAP_TILE, MAP_TILE)
 
 
-world_map = {}
+world_map = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
 mini_map = []
 for j, row in enumerate(text_map):
-    for i, char in enumerate(row):
+    for i, char in enumerate(row[:-1]):
         if char != ' ':
             pf_minimap = PlatformMinimap(i * MAP_TILE, j * MAP_TILE)
             mini_map.append(pf_minimap)
-            world_map[(i * TILE, j * TILE)] = char
+            world_map[(i * TILE, j * TILE)] = int32(char)
 
 
 mini_map_texture = pygame.Surface((MAP_SIZE, MAP_SIZE))

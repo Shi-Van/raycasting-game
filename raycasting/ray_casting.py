@@ -7,7 +7,7 @@ def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
 
-def ray_casting(sc, player_position, direction_angle, textures, mobs):
+def ray_casting(sc, player_position, direction_angle, textures, mobs, world_map):
     ox, oy = player_position
     xm, ym = mapping(ox, oy)
     cur_angle = direction_angle - HALF_FOV
@@ -15,7 +15,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
     rays_depth = []
     for ray in range(NUM_RAYS):
         rays_depth += [
-            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle)]
+            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, world_map)]
         cur_angle += DELTA_ANGLE
 
     for mob in mobs:
@@ -37,13 +37,13 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs):
     screen_blit(rays_depth, textures, sc)
 
 
-# @njit(fastmath=True)
-def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle):
+@njit(fastmath=True)
+def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, world_map):
     sin_a = math.sin(cur_angle)
     cos_a = math.cos(cur_angle)
     sin_a = sin_a if sin_a else 0.000001
     cos_a = cos_a if cos_a else 0.000001
-    texture_hor = texture_ver = '1'
+    texture_hor = texture_ver = 1
 
     # verticals
     x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)

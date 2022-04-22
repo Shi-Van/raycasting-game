@@ -1,5 +1,5 @@
 from map import *
-# from numba import njit
+from numba import njit
 import pygame
 
 
@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
     def pos(self):
         return self.rect.centerx, self.rect.centery
 
-    def movement(self):
+    def movement(self, world_map):
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
         keys = pygame.key.get_pressed()
@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
         pygame.mouse.set_pos(HALF_WIDTH, HALF_HEIGHT)
         self.angle += rel[0] * sens_koef
 
-        delt_x, delt_y = collide(delt_y, delt_x, cube_y_pos, cube_x_pos, self.x, self.y)
+        delt_x, delt_y = collide(delt_y, delt_x, cube_y_pos, cube_x_pos, self.x, self.y, world_map)
 
         self.x += delt_x
         self.y += delt_y
@@ -61,8 +61,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = self.y
 
 
-# @njit(fastmath=True)
-def collide(delt_y, delt_x, cube_y_pos, cube_x_pos, x, y):
+@njit(fastmath=True)
+def collide(delt_y, delt_x, cube_y_pos, cube_x_pos, x, y, world_map):
 
     # collide with walls
     if delt_y <= 0:

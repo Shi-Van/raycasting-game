@@ -2,7 +2,7 @@ from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
-from map import opened_map_image, opened_map
+from map import opened_map_image, opened_map, world_map
 pygame.init()
 pygame.display.set_caption("3d shooter")
 # x = pygame.image.load('images/game-1.png').convert()
@@ -81,10 +81,10 @@ while True:
         open_map(sc, bg_image, opened_map, opened_map_image, player.pos, player.angle)
     else:
         pygame.mixer.music.unpause()
-        player.movement()
+        player.movement(world_map)
         sc.fill(BLACK)
         drawing.background(player.angle)
-        drawing.world(player.pos, player.angle, mobs)
+        drawing.world(player.pos, player.angle, mobs, world_map)
         drawing.fps(clock)
         drawing.mini_map(player)
         drawing.compass(player.angle)

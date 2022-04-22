@@ -11,8 +11,8 @@ class Drawing:
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass1 = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_compass2 = pygame.font.SysFont('Arial', 20, bold=True)
-        self.textures = {'1': pygame.image.load('images/remn_wall7.png').convert(),
-                         '2': pygame.image.load('images/remn_wall1.png').convert()}
+        self.textures = {1: pygame.image.load('images/remn_wall7.png').convert(),
+                         2: pygame.image.load('images/remn_wall1.png').convert()}
         for i in self.textures:
             self.textures[i] = pygame.transform.scale(self.textures[i], (1200, 1200))
         self.sky_texture = pygame.image.load('images/sky1.jpg').convert()
@@ -25,8 +25,8 @@ class Drawing:
         self.sc.blit(self.sky_texture, (sky_pos + WIDTH, 0))
         pygame.draw.rect(self.sc, DARKGREY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
-    def world(self, player_position, dir_angle, mobs):
-        ray_casting(self.sc, player_position, dir_angle, self.textures, mobs)
+    def world(self, player_position, dir_angle, mobs, world_map):
+        ray_casting(self.sc, player_position, dir_angle, self.textures, mobs, world_map)
 
     def compass(self, angle):
         dir0 = str(int(math.degrees(angle)) % 360)

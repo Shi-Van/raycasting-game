@@ -14,6 +14,7 @@ class PlatformMinimap(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x, y, MAP_TILE, MAP_TILE)
 
 
+# world_map = {}
 world_map = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
 mini_map = []
 for j, row in enumerate(text_map):
@@ -26,7 +27,7 @@ for j, row in enumerate(text_map):
 
 mini_map_texture = pygame.Surface((MAP_SIZE, MAP_SIZE))
 
-width_map = len(text_map[0]) * MAP_TILE
+width_map = (len(text_map[0]) - 1) * MAP_TILE
 height_map = len(text_map) * MAP_TILE
 
 map_image = pygame.Surface((width_map, height_map))

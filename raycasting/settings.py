@@ -9,7 +9,7 @@ for m in get_monitors():
     HEIGHT = m.height if m.height > HEIGHT else HEIGHT
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
-FPS = 144
+FPS = 60
 TILE = 100
 FPS_POS = (35, 5)
 view_range = 3300

@@ -19,12 +19,9 @@ paused = False
 map_open = False
 mob = Mobs((3000, 4000), 1)
 mobs = [mob]
-pygame.mixer.init()
 pause_music = False
-pygame.mixer.music.load('music\doom.mp3')
-pygame.mixer.music.play(1)
-pygame.mixer.music.fadeout(10)
-
+play_music = False
+Continue = 0
 
 # buttons functions
 def pause_button_active():
@@ -32,7 +29,6 @@ def pause_button_active():
     paused = False
     pygame.mouse.set_visible(False)
     pygame.mouse.get_rel()
-
 
 def exit_button_active():
     exit()
@@ -43,7 +39,6 @@ buttons = []
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -67,13 +62,20 @@ while True:
             paused = True
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
+    if not play_music and not paused:
+        pygame.mixer.music.load('music\doom.mp3')
+        pygame.mixer.music.play(1)
+        play_music = True
     if paused and not pause_music:
+        Continue = pygame.mixer.music.get_pos()
         pygame.mixer.music.pause()
         pygame.mixer.music.load('music\Alexander Nakarada - Chase.mp3')
         pygame.mixer.music.play(1)
-    if not paused:
+        pygame.mixer.music.set_pos(4.38)
+        play_music = False
+    if not paused and pause_music:
         pause_music = False
-        pygame.mixer.music.stop()
+        pygame.mixer.music.pause()
     if paused:
         game_pause(sc, bg_image, buttons)
         pause_music = True

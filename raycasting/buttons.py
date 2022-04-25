@@ -1,7 +1,7 @@
 import pygame
 from map import map_scale
 from settings import *
-
+pygame.mixer.init()
 
 class Button:
     def __init__(self, sc, width, height, x, y, function, text):
@@ -19,6 +19,8 @@ class Button:
                 (self.rect.y <= mouse_position[1] <= self.rect.bottomright[1]):
             pygame.draw.rect(self.sc, active_colour, self.rect)
             if click[0]:
+                pygame.mixer.music.load('music\computer-keyboard-button-press-release_m1pp3tnd.mp3')
+                pygame.mixer.music.play(1)
                 self.function()
         else:
             pygame.draw.rect(self.sc, not_active_colour, self.rect)

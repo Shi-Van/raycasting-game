@@ -22,6 +22,7 @@ mobs = [mob]
 pause_music = False
 play_music = False
 Continue = 0
+vol = 1.0
 
 # buttons functions
 def pause_button_active():
@@ -62,6 +63,12 @@ while True:
             paused = True
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            vol -= 0.1
+            pygame.mixer.music.set_volume(vol)
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            vol += 0.1
+            pygame.mixer.music.set_volume(vol)
     if not play_music and not paused:
         pygame.mixer.music.load('music\doom.mp3')
         pygame.mixer.music.play(1)

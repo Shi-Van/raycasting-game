@@ -23,6 +23,9 @@ pause_music = False
 play_music = False
 Continue = 0
 vol = 1.0
+def Exit():
+    exit()
+win_buttons = []
 
 # buttons functions
 def pause_button_active():
@@ -35,17 +38,33 @@ def exit_button_active():
     exit()
 
 
+#win!
+def win():
+    pygame.mixer.music.load('music\gta-san-andreas-opening-intro.mp3')
+    pygame.mixer.music.play(1)
+    for win_button in win_buttons:
+        win_button.draw_button()
+    pygame.display.flip()
+    pygame.mouse.set_visible(True)
+
+
+
+
 buttons = []
 # pause_button
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
+#win_button
+win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, Exit, 'YOU WIN!!!')]
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         # map screen
-        if event.type == pygame.KEYDOWN and map_open and (event.key == pygame.K_m or event.key == pygame.K_ESCAPE):
+        if 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
+            win()
+        elif event.type == pygame.KEYDOWN and map_open and (event.key == pygame.K_m or event.key == pygame.K_ESCAPE):
             map_open = False
             pygame.mouse.get_rel()
             pygame.mouse.set_visible(False)

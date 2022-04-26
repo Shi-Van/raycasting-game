@@ -12,9 +12,12 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs, worldmap):
     cur_angle = direction_angle - HALF_FOV
     depth_h = depth_v = yv = xh = 0
     rays_depth = []
+    new_walls = set()
     for ray in range(NUM_RAYS):
-        rays_depth += [
-            ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, worldmap)]
+        values = ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direction_angle, worldmap)
+        rays_depth += [values[:-1]]
+        if values[6] in worldmap:
+            new_walls |= {values[6]}
         cur_angle += DELTA_ANGLE
 
     for mob in mobs:
@@ -34,6 +37,7 @@ def ray_casting(sc, player_position, direction_angle, textures, mobs, worldmap):
 
     rays_depth.sort(reverse=True)
     screen_blit(rays_depth, textures, sc)
+    return new_walls
 
 
 @njit(fastmath=True)
@@ -67,13 +71,14 @@ def ray_counting(xm, ox, ym, oy, ray, cur_angle, depth_h, depth_v, yv, xh, direc
         y += dy * TILE
 
     # projection
-    depth, offset, texture = (depth_v, yv, texture_ver) if depth_v < depth_h else (depth_h, xh, texture_hor)
+    depth, offset, texture, tile = (depth_v, yv, texture_ver, tile_v) if depth_v < depth_h \
+        else (depth_h, xh, texture_hor, tile_h)
     offset = int(offset) % TILE
     depth = depth if depth else 0.000001
     depth *= math.cos(direction_angle - cur_angle)
     proj_height = int(PROJ_COEF / depth)
 
-    return depth, 0, texture, offset, proj_height, ray
+    return depth, 0, texture, offset, proj_height, ray, tile
 
 
 def screen_blit(rays_depth, textures, sc):

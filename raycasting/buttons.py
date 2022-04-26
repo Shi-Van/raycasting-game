@@ -3,6 +3,7 @@ from map import map_scale
 from settings import *
 pygame.mixer.init()
 
+
 class Button:
     def __init__(self, sc, width, height, x, y, function, text):
         self.sc = sc
@@ -46,21 +47,4 @@ def game_pause(sc, bg_image, buttons):
     for button in buttons:
         button.draw_button()
 
-    pygame.display.flip()
-
-
-# open map
-def open_map(sc, bg_image, opened_map, opened_map_image, player_position, angle):
-    sc.blit(bg_image, (0, 0))
-    opened_map.blit(opened_map_image, (0, 0))
-    map_x, map_y = player_position
-    map_x, map_y = map_x // MAP_SCALE * map_scale, map_y // MAP_SCALE * map_scale
-
-    # player om map
-    pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 8 * map_scale * math.cos(angle),
-                                                          map_y + 8 * map_scale * math.sin(angle)), int(1 * map_scale))
-    pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), max(5 * map_scale, 5))
-
-    map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
-    sc.blit(opened_map, map_rect)
     pygame.display.flip()

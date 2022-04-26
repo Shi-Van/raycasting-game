@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from ray_casting import ray_casting
-from map import map_image
+from map import map_image, map_scale, opened_map_image
 
 
 class Drawing:
@@ -17,6 +17,8 @@ class Drawing:
             self.textures[i] = pygame.transform.scale(self.textures[i], (1200, 1200))
         self.sky_texture = pygame.image.load('images/sky1.jpg').convert()
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))
+        self.seen_walls = set()
+        self.opened_map_image = opened_map_image
 
     def background(self, angle):
         sky_pos = -10 * math.degrees(angle) % WIDTH
@@ -26,7 +28,10 @@ class Drawing:
         pygame.draw.rect(self.sc, DARKGREY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, player_position, dir_angle, mobs, world_map):
-        ray_casting(self.sc, player_position, dir_angle, self.textures, mobs, world_map)
+        new_walls = ray_casting(self.sc, player_position, dir_angle, self.textures, mobs, world_map)
+        new_walls -= self.seen_walls
+        self.opened_map_update(new_walls)
+        self.seen_walls |= new_walls
 
     def compass(self, angle):
         dir0 = str(int(math.degrees(angle)) % 360)
@@ -60,3 +65,25 @@ class Drawing:
                                                                map_y + 8 * math.sin(player.angle)), 1)
         pygame.draw.circle(self.sc_map, YELLOW, (int(map_x), int(map_y)), 5)
         self.sc.blit(self.sc_map, (WIDTH - MAP_SIZE - 10, 10))
+
+    def opened_map_update(self, new_walls):
+        for platform in new_walls:
+            pygame.draw.rect(self.opened_map_image, LIGHTGREY, (platform[0] // TILE * MAP_TILE * map_scale,
+                                                                platform[1] // TILE * MAP_TILE * map_scale,
+                                                                MAP_TILE * map_scale, MAP_TILE * map_scale))
+
+    def open_map(self, bg_image, opened_map, player_position, angle):
+        self.sc.blit(bg_image, (0, 0))
+        opened_map.blit(self.opened_map_image, (0, 0))
+        map_x, map_y = player_position
+        map_x, map_y = map_x // MAP_SCALE * map_scale, map_y // MAP_SCALE * map_scale
+
+        # player om map
+        pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 8 * map_scale * math.cos(angle),
+                                                              map_y + 8 * map_scale * math.sin(angle)),
+                         int(1 * map_scale))
+        pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), max(5 * map_scale, 5))
+
+        map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
+        self.sc.blit(opened_map, map_rect)
+        pygame.display.flip()

@@ -16,6 +16,7 @@ class PlatformMinimap(pygame.sprite.Sprite):
 
 # world_map = {}
 world_map = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
+
 mini_map = []
 for j, row in enumerate(text_map):
     for i, char in enumerate(row[:-1]):
@@ -34,10 +35,10 @@ map_image = pygame.Surface((width_map, height_map))
 map_image.fill(DARKGREY)
 for platform in mini_map:
     pygame.draw.rect(map_image, LIGHTGREY, (platform.rect.x, platform.rect.y, MAP_TILE, MAP_TILE))
-map_scale = min(WIDTH / (width_map * 2), HEIGHT / (height_map * 2))
 
+map_scale = min(WIDTH / (width_map * 2), HEIGHT / (height_map * 2))
 opened_map = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image.fill(DARKGREY)
-for platform in mini_map:
-    pygame.draw.rect(opened_map_image, LIGHTGREY, (platform.rect.x * map_scale, platform.rect.y * map_scale, MAP_TILE * map_scale, MAP_TILE * map_scale))
+# for platform in mini_map:
+#     pygame.draw.rect(opened_map_image, LIGHTGREY, (platform.rect.x * map_scale, platform.rect.y * map_scale, MAP_TILE * map_scale, MAP_TILE * map_scale))

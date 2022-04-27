@@ -98,7 +98,7 @@ while True:
     if paused:
         game_pause(sc, bg_image, buttons)
         pause_music = True
-    if 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
+    elif 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
         win()
         if not Continue:
             pygame.mixer.music.load('music\gta-san-andreas-opening-intro.mp3')

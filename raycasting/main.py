@@ -21,11 +21,8 @@ mob = Mobs((3000, 4000), 1)
 mobs = [mob]
 pause_music = False
 play_music = False
-Continue = 0
+Continue = False
 vol = 1.0
-def Exit():
-    exit()
-win_buttons = []
 
 # buttons functions
 def pause_button_active():
@@ -40,8 +37,6 @@ def exit_button_active():
 
 #win!
 def win():
-    pygame.mixer.music.load('music\gta-san-andreas-opening-intro.mp3')
-    pygame.mixer.music.play(1)
     for win_button in win_buttons:
         win_button.draw_button()
     pygame.display.flip()
@@ -56,7 +51,7 @@ buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, '
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 #win_button
-win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, Exit, 'YOU WIN!!!')]
+win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, exit_button_active, 'YOU WIN!!!')]
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -90,13 +85,11 @@ while True:
             pygame.mixer.music.set_volume(vol)
     if not play_music and not paused:
         pygame.mixer.music.load('music\doom.mp3')
-        pygame.mixer.music.play(1)
+        pygame.mixer.music.play(-1)
         play_music = True
     if paused and not pause_music:
-        Continue = pygame.mixer.music.get_pos()
-        pygame.mixer.music.pause()
         pygame.mixer.music.load('music\Alexander Nakarada - Chase.mp3')
-        pygame.mixer.music.play(1)
+        pygame.mixer.music.play(-1)
         pygame.mixer.music.set_pos(4.38)
         play_music = False
     if not paused and pause_music:
@@ -105,7 +98,13 @@ while True:
     if paused:
         game_pause(sc, bg_image, buttons)
         pause_music = True
-
+    if 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
+        win()
+        if not Continue:
+            pygame.mixer.music.load('music\gta-san-andreas-opening-intro.mp3')
+            pygame.mixer.music.play(-1)
+            pygame.mixer.music.set_pos(24.38)
+        Continue = True
     elif map_open:
         drawing.open_map(bg_image, player.pos, player.angle)
     else:

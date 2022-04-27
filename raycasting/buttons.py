@@ -1,9 +1,8 @@
 import pygame
-from map import map_scale
 from settings import *
 pygame.mixer.init()
 
-win_buttons = []
+
 class Button:
     def __init__(self, sc, width, height, x, y, function, text):
         self.sc = sc
@@ -48,3 +47,8 @@ def game_pause(sc, bg_image, buttons):
         button.draw_button()
 
     pygame.display.flip()
+
+
+# button lists
+win_buttons = []
+buttons = []

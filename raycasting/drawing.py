@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from ray_casting import ray_casting, mapping
+from ray_casting import ray_casting
 from map import map_image, map_scale, opened_map_image, opened_map
 
 
@@ -79,7 +79,7 @@ class Drawing:
                                                                 platform[1] // TILE * MAP_TILE * map_scale,
                                                                 MAP_TILE * map_scale, MAP_TILE * map_scale))
 
-    def open_map(self, bg_image, player_position, angle):
+    def open_map(self, bg_image, player_position):
         self.sc.blit(bg_image, (0, 0))
         opened_map.blit(self.opened_map_image, (0, 0))
         map_x, map_y = player_position

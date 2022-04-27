@@ -45,7 +45,6 @@ def win():
     pygame.mouse.set_visible(True)
 
 
-buttons = []
 # pause_button
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
@@ -106,7 +105,7 @@ while True:
             pygame.mixer.music.set_pos(24.38)
         Continue = True
     elif map_open:
-        drawing.open_map(bg_image, player.pos, player.angle)
+        drawing.open_map(bg_image, player.pos)
     else:
         pygame.mixer.music.unpause()
         player.movement(world_map)

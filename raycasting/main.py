@@ -24,6 +24,7 @@ play_music = False
 Continue = False
 vol = 1.0
 
+
 # buttons functions
 def pause_button_active():
     global paused
@@ -31,11 +32,12 @@ def pause_button_active():
     pygame.mouse.set_visible(False)
     pygame.mouse.get_rel()
 
+
 def exit_button_active():
     exit()
 
 
-#win!
+# win!
 def win():
     for win_button in win_buttons:
         win_button.draw_button()
@@ -43,14 +45,12 @@ def win():
     pygame.mouse.set_visible(True)
 
 
-
-
 buttons = []
 # pause_button
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
 # exit_button
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
-#win_button
+# win_button
 win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, exit_button_active, 'YOU WIN!!!')]
 while True:
     for event in pygame.event.get():

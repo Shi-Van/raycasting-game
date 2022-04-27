@@ -1,7 +1,7 @@
 import pygame
 from settings import *
-from ray_casting import ray_casting
-from map import map_image, map_scale, opened_map_image
+from ray_casting import ray_casting, mapping
+from map import map_image, map_scale, opened_map_image, opened_map
 
 
 class Drawing:
@@ -19,6 +19,7 @@ class Drawing:
         self.sky_texture = pygame.transform.scale(self.sky_texture, (WIDTH, HEIGHT // 2))
         self.seen_walls = set()
         self.opened_map_image = opened_map_image
+        self.map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
 
     def background(self, angle):
         sky_pos = -10 * math.degrees(angle) % WIDTH
@@ -30,6 +31,11 @@ class Drawing:
     def world(self, player_position, dir_angle, mobs, world_map):
         new_walls = ray_casting(self.sc, player_position, dir_angle, self.textures, mobs, world_map)
         new_walls -= self.seen_walls
+        x, y = player_position[0] // TILE - 2, player_position[1] // TILE - 2
+        for j in range(y, y + 4):
+            for i in range(x, x + 4):
+                if (i * TILE, j * TILE) in world_map and (i * TILE, j * TILE) not in self.seen_walls:
+                    new_walls |= {(i * TILE, j * TILE)}
         self.opened_map_update(new_walls)
         self.seen_walls |= new_walls
 
@@ -72,18 +78,14 @@ class Drawing:
                                                                 platform[1] // TILE * MAP_TILE * map_scale,
                                                                 MAP_TILE * map_scale, MAP_TILE * map_scale))
 
-    def open_map(self, bg_image, opened_map, player_position, angle):
+    def open_map(self, bg_image, player_position, angle):
         self.sc.blit(bg_image, (0, 0))
         opened_map.blit(self.opened_map_image, (0, 0))
         map_x, map_y = player_position
         map_x, map_y = map_x // MAP_SCALE * map_scale, map_y // MAP_SCALE * map_scale
 
         # player om map
-        pygame.draw.line(opened_map, YELLOW, (map_x, map_y), (map_x + 8 * map_scale * math.cos(angle),
-                                                              map_y + 8 * map_scale * math.sin(angle)),
-                         int(1 * map_scale))
         pygame.draw.circle(opened_map, YELLOW, (int(map_x), int(map_y)), max(5 * map_scale, 5))
 
-        map_rect = opened_map.get_rect(center=(HALF_WIDTH, HALF_HEIGHT))
-        self.sc.blit(opened_map, map_rect)
+        self.sc.blit(opened_map, self.map_rect)
         pygame.display.flip()

@@ -9,7 +9,7 @@ for m in get_monitors():
     HEIGHT = m.height if m.height > HEIGHT else HEIGHT
 HALF_WIDTH = WIDTH // 2
 HALF_HEIGHT = HEIGHT // 2
-FPS = 60
+FPS = 144
 TILE = 100
 FPS_POS = (35, 5)
 view_range = 3300
@@ -24,7 +24,7 @@ HALF_MAP_SIZE = MAP_SIZE // 2
 # ray casting settings
 FOV = math.pi / 3
 HALF_FOV = FOV / 2
-NUM_RAYS = 500
+NUM_RAYS = 350
 while WIDTH % NUM_RAYS != 0:
     NUM_RAYS -= 10
 print(NUM_RAYS)

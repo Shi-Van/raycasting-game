@@ -40,5 +40,3 @@ map_scale = min(WIDTH / (width_map * 2), HEIGHT / (height_map * 2))
 opened_map = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image = pygame.Surface((width_map * map_scale, height_map * map_scale))
 opened_map_image.fill(DARKGREY)
-# for platform in mini_map:
-#     pygame.draw.rect(opened_map_image, LIGHTGREY, (platform.rect.x * map_scale, platform.rect.y * map_scale, MAP_TILE * map_scale, MAP_TILE * map_scale))

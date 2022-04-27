@@ -2,7 +2,7 @@ from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
-from map import opened_map, world_map
+from map import world_map
 
 pygame.init()
 pygame.display.set_caption("3d shooter")
@@ -107,7 +107,7 @@ while True:
         pause_music = True
 
     elif map_open:
-        drawing.open_map(bg_image, opened_map, player.pos, player.angle)
+        drawing.open_map(bg_image, player.pos, player.angle)
     else:
         pygame.mixer.music.unpause()
         player.movement(world_map)

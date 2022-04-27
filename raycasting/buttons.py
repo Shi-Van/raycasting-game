@@ -3,7 +3,7 @@ from map import map_scale
 from settings import *
 pygame.mixer.init()
 
-
+win_buttons = []
 class Button:
     def __init__(self, sc, width, height, x, y, function, text):
         self.sc = sc

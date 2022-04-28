@@ -8,7 +8,7 @@ class Mobs(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.x, self.y = position
         self.type = mob_type
-        self.image = pygame.image.load('images/монстр.png').convert_alpha()
+        self.image = pygame.image.load('images/воловик.png').convert_alpha()
 
     def mob_distance(self, pl_pos):
         return dist_calc(self.x, self.y, pl_pos)

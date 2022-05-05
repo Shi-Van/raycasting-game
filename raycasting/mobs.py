@@ -2,6 +2,7 @@ from settings import *
 import pygame
 from numba import njit
 
+
 class Mobs(pygame.sprite.Sprite):
     def __init__(self, position, mob_type):
         pygame.sprite.Sprite.__init__(self)

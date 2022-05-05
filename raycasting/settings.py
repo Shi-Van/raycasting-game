@@ -64,3 +64,7 @@ GREY = (70, 70, 70)
 not_active_colour, active_colour = LIGHTGREY, GREY
 
 ind_hit = [(1, 1), (-1, -1), (0, 1), (1, 0), (0, -1), (-1, 0), (1, -1), (-1, 1)]
+
+# mobs
+mob_speed = 6
+

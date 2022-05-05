@@ -9,6 +9,7 @@ pygame.display.set_caption("3d shooter")
 # x = pygame.image.load('images/game-1.png').convert()
 # sc.blit(x, (0, 0))
 sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+sc.fill((0, 100, 0))
 bg_image = sc.copy()
 sc_map = pygame.Surface((MAP_SIZE, MAP_SIZE))
 clock = pygame.time.Clock()
@@ -23,6 +24,7 @@ pause_music = False
 play_music = False
 Continue = False
 vol = 2.0
+kill = False
 
 
 # buttons functions
@@ -36,13 +38,28 @@ def pause_button_active():
 def exit_button_active():
     exit()
 
+def restart():
+    player_pos = (5700, 6400)
+    mob = Mobs((3000, 4000), 1)
+    kill = False
 
-# win function
+
+
+
+# win/fail function
 def win():
     for win_button in win_buttons:
         win_button.draw_button()
     pygame.display.flip()
     pygame.mouse.set_visible(True)
+
+
+def fail():
+    for fail_button in fail_buttons:
+        fail_button.draw_button()
+    pygame.display.flip()
+    pygame.mouse.set_visible(True)
+
 
 
 buttons = []
@@ -52,14 +69,15 @@ buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, '
 buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 # win_button
 win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, exit_button_active, 'YOU WIN!!!')]
+# fail_button
+fail_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, restart, 'WASTED')]
+fail_buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 while True:
     # click tracking
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
         # map screen
-        if 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
-            win()
         elif event.type == pygame.KEYDOWN and map_open and (event.key == pygame.K_m or event.key == pygame.K_ESCAPE):
             map_open = False
             pygame.mouse.get_rel()
@@ -112,7 +130,14 @@ while True:
     if paused:
         game_pause(sc, bg_image, buttons)
         pause_music = True
-    # winning the game
+    # winning/losing the game
+    elif kill:
+        fail()
+        if not Continue:
+            pygame.mixer.music.load('music\Iogann_Sebastyan_Bakh_-_Tokkata_i_fuga_re_minor_organ_-_Valter_Kraft_68309978.mp3')
+            pygame.mixer.music.play(-1)
+            pygame.mixer.music.set_pos(1.0)
+        Continue = True
     elif 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
         win()
         if not Continue:
@@ -127,7 +152,9 @@ while True:
     else:
         pygame.mixer.music.unpause()
         player.movement(world_map)
-        sc.fill(BLACK)
+        for mob in mobs:
+            kill = mob.update(player.pos)
+        # sc.fill(BLACK)
         drawing.background(player.angle)
         drawing.world(player.pos, player.angle, mobs, world_map)
         drawing.fps(clock)

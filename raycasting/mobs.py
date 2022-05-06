@@ -2,6 +2,7 @@ from settings import *
 import pygame
 from numba import njit
 
+
 class Mobs(pygame.sprite.Sprite):
     def __init__(self, position, mob_type):
         pygame.sprite.Sprite.__init__(self)
@@ -18,18 +19,15 @@ class Mobs(pygame.sprite.Sprite):
         return angle_calc(self.x, self.y, player_position)
 
     def update(self, player_position):
-        angle = (self.mob_angle(player_position) + math.pi) % (2 * math.pi)
-        delt_y = self.speed * math.sin(angle)
-        delt_x = self.speed * math.cos(angle)
         if self.mob_distance(player_position) < self.mob_wight:
             return True
 
-        # delt_x, delt_y = collide(delt_y, delt_x, cube_y_pos, cube_x_pos, self.x, self.y, worldmap)
+        angle = (self.mob_angle(player_position) + math.pi) % (2 * math.pi)
+        delt_y = self.speed * math.sin(angle)
+        delt_x = self.speed * math.cos(angle)
 
         self.x += delt_x
         self.y += delt_y
-        # self.rect.centerx = self.x
-        # self.rect.centery = self.y
 
 
 @njit(fastmath=True)

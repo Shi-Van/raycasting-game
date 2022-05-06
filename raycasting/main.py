@@ -23,8 +23,10 @@ mobs = [mob]
 pause_music = False
 play_music = False
 Continue = False
-vol = 2.0
+vol = 1.0
 kill = False
+First = True
+
 
 
 # buttons functions
@@ -115,6 +117,11 @@ while True:
     # music in different modes
     if not play_music and not paused:
         pygame.mixer.music.load('music\doom.mp3')
+        pygame.mixer.music.set_volume(vol)
+        if First:
+            vol -= 0.5
+            pygame.mixer.music.set_volume(vol)
+            First = False
         pygame.mixer.music.play(-1)
         play_music = True
     if paused and not pause_music:

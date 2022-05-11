@@ -27,9 +27,6 @@ def close_game(sc):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                if score > max_score:
-                    with open('data\max_score.txt', 'w') as fin:
-                        print(str(score), file=fin)
                 snake_game(sc)
 
 
@@ -56,9 +53,7 @@ def next_key():
 
 def render_image(snake, apple):
     surface.blit(img4, (0, 0))
-    render_max_score = font_score.render(f'рекорд: {max_score}', 1, pygame.Color('blue'))
-    surface.blit(render_max_score, (5, 30))
-    render_score = font_score.render(f'Украдено хекстеков: {score}', 1, (139, 0, 255))
+    render_score = font_score.render(f'Украдено хекстеков: {score}', True, (139, 0, 255))
     surface.blit(render_score, (5, 5))
     [surface.blit(img3, (i + 5, j + 5)) for i, j in snake[:-1]]
     surface.blit(img2, snake[-1])
@@ -68,18 +63,19 @@ def render_image(snake, apple):
 def snake_game(sc):
     global score, max_score
     global dx, dy, dirs
+    global aim
     x, y = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)
     apple = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)
     length = 1
     snake = [(x, y)]
-    with open('data\max_score.txt', 'r') as fin:
-        max_score = int(fin.read())
     score = 0
     speed_count = 0
     dx, dy = 0, 0
     dirs = {'W': True, 'S': True, 'A': True, 'D': True}
 
     while True:
+        for event in pygame.event.get():
+            pass
         if score == aim:
             return True
 
@@ -100,9 +96,10 @@ def snake_game(sc):
         if x < 0 or x > RES - SIZE or y > RES - SIZE or y < 0 or len(snake) != len(set(snake)):
             while True:
                 render_end = font_end.render('GAME OVER', True, pygame.Color('blue'))
-                render_p = font_score.render('нажмите пробел для перезапуска', 1, (139, 0, 255))
+                render_p = font_score.render('нажмите пробел для перезапуска', True, (139, 0, 255))
                 surface.blit(render_end, (RES // 2 - 200, RES // 3))
                 surface.blit(render_p, (RES // 2 - 200, RES // 3 + 100))
+                sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
                 pygame.display.flip()
                 close_game(sc)
 

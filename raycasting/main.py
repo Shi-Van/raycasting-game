@@ -101,10 +101,12 @@ while True:
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
 
-        elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[
-            1] <= 475 and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-            print('lol')
+        elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[1] <= 475 and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
             snake_game(sc)
+            if snake:
+                world_map.pop((5000, 450))
+                world_map.pop((5000, 500))
+
 
         # changing the volume
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:

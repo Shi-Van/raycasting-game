@@ -7,7 +7,7 @@ SIZE = 50
 snake_speed = 10
 pygame.init()
 surface = pygame.Surface((RES, RES))
-aim = 10
+aim = 5
 clock = pygame.time.Clock()
 fps = 60
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
@@ -107,4 +107,3 @@ def snake_game(sc):
         next_key()
         sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
         clock.tick(fps)
-    return True

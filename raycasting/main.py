@@ -2,7 +2,7 @@ from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
-from map import world_map
+from map import world_map, world_map2, mini_map, mini_map2
 from snake_quest import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
@@ -26,7 +26,6 @@ Continue = False
 vol = 1.0
 kill = False
 First = True
-snake = False
 
 
 
@@ -103,8 +102,8 @@ while True:
 
         elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[1] <= 475 and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
             snake_game(sc)
-            world_map.pop((5000, 450))
-            world_map.pop((5000, 500))
+            world_map = world_map2
+            mini_map = mini_map2
 
 
         # changing the volume
@@ -160,7 +159,7 @@ while True:
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_pos(24.38)
         Continue = True
-    # open big mapёв
+    # open big map
     elif map_open:
         drawing.open_map(bg_image, player.pos)
     # game

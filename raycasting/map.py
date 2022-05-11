@@ -7,6 +7,8 @@ from numba import int32
 with open('map.txt', 'r') as m:
     text_map = m.readlines()
 
+with open('map2.txt', 'r') as m:
+    text_map2 = m.readlines()
 
 class PlatformMinimap(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -16,8 +18,9 @@ class PlatformMinimap(pygame.sprite.Sprite):
 
 # world_map = {}
 world_map = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
-
+world_map2 = Dict.empty(key_type=types.UniTuple(int32, 2), value_type=int32)
 mini_map = []
+mini_map2 = []
 for j, row in enumerate(text_map):
     for i, char in enumerate(row[:-1]):
         if char != ' ':
@@ -25,6 +28,12 @@ for j, row in enumerate(text_map):
             mini_map.append(pf_minimap)
             world_map[(i * TILE, j * TILE)] = int32(char)
 
+for j, row in enumerate(text_map2):
+    for i, char in enumerate(row[:-1]):
+        if char != ' ':
+            pf_minimap2 = PlatformMinimap(i * MAP_TILE, j * MAP_TILE)
+            mini_map2.append(pf_minimap2)
+            world_map2[(i * TILE, j * TILE)] = int32(char)
 
 mini_map_texture = pygame.Surface((MAP_SIZE, MAP_SIZE))
 

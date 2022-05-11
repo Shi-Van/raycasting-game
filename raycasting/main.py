@@ -2,7 +2,7 @@ from mobs import Mobs
 from player import Player
 from drawing import *
 from buttons import *
-from map import world_map, world_map2, mini_map, mini_map2
+from map import world_map, world_map2
 from snake_quest import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
@@ -28,7 +28,6 @@ kill = False
 First = True
 
 
-
 # buttons functions
 def pause_button_active():
     global paused
@@ -39,13 +38,6 @@ def pause_button_active():
 
 def exit_button_active():
     exit()
-
-def restart():
-    player_pos = (5700, 6400)
-    mob = Mobs((3000, 4000), 1)
-    kill = False
-
-
 
 
 # win/fail function
@@ -63,7 +55,6 @@ def fail():
     pygame.mouse.set_visible(True)
 
 
-
 buttons = []
 # pause_button
 buttons += [Button(sc, 300, 100, WIDTH // 2, HEIGHT // 2, pause_button_active, 'CONTINUE')]
@@ -72,7 +63,7 @@ buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 # win_button
 win_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, exit_button_active, 'YOU WIN!!!')]
 # fail_button
-fail_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, restart, 'WASTED')]
+fail_buttons += [Button(sc, 600, 200, WIDTH // 2, HEIGHT // 2, exit_button_active, 'WASTED')]
 fail_buttons += [Button(sc, 50, 50, WIDTH - 50, 50, exit_button_active, 'X')]
 while True:
     # click tracking
@@ -100,11 +91,10 @@ while True:
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
 
-        elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[1] <= 475 and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+        elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[1] <= 475 and event.type == pygame.KEYDOWN\
+                and event.key == pygame.K_e:
             snake_game(sc)
             world_map = world_map2
-            mini_map = mini_map2
-
 
         # changing the volume
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:

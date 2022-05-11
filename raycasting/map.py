@@ -10,6 +10,7 @@ with open('map.txt', 'r') as m:
 with open('map2.txt', 'r') as m:
     text_map2 = m.readlines()
 
+
 class PlatformMinimap(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)

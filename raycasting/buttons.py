@@ -32,8 +32,6 @@ class Button:
         surface.blit(sc_text, pos)
 
     # def slider(self, circle_diameter):
-    #
-
 
 
 # Pause_button

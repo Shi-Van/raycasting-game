@@ -1,2 +1,2 @@
-from game_functions import *
+from snake_quest import *
 my_game()

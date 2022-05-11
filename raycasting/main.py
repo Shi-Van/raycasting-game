@@ -3,7 +3,7 @@ from player import Player
 from drawing import *
 from buttons import *
 from map import world_map
-
+from snake_quest import *
 pygame.init()
 pygame.display.set_caption("3d shooter")
 # x = pygame.image.load('images/game-1.png').convert()
@@ -26,6 +26,7 @@ Continue = False
 vol = 1.0
 kill = False
 First = True
+snake = False
 
 
 
@@ -100,6 +101,11 @@ while True:
             bg_image = sc.copy()
             pygame.mouse.set_visible(True)
 
+        elif 4695 <= player.pos[0] <= 4795 and 375 <= player.pos[
+            1] <= 475 and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+            print('lol')
+            snake_game(sc)
+
         # changing the volume
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             if vol - 0.1 <= 0:
@@ -145,6 +151,7 @@ while True:
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_pos(1.0)
         Continue = True
+
     elif 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
         win()
         if not Continue:

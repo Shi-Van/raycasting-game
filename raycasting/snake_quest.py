@@ -1,20 +1,36 @@
-from importing_images import *
+import pygame
+from random import randrange
+from settings import HALF_HEIGHT, HALF_WIDTH
+
+RES = 700
+SIZE = 50
+snake_speed = 10
+pygame.init()
+surface = pygame.Surface((RES, RES))
+aim = 10
+clock = pygame.time.Clock()
+fps = 60
+font_score = pygame.font.SysFont('Arial', 26, bold=True)
+font_end = pygame.font.SysFont('Arial', 65, bold=True)
+img = pygame.image.load("data\img1.png")
+img = pygame.transform.scale(img, (50, 50))
+img2 = pygame.image.load("data\_cr01mQK8.jpg")
+img2 = pygame.transform.scale(img2, (50, 50))
+img3 = pygame.image.load("data\img3.png")
+img3 = pygame.transform.scale(img3, (40, 40))
+img4 = pygame.image.load("data\Visual_Night.jpg")
+img4 = pygame.transform.scale(img4, (RES, RES))
 
 
-def close_game():
+def close_game(sc):
     global score, max_score
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            if score > max_score:
-                with open('data\max_score.txt', 'w') as fin:
-                    print(str(score), file=fin)
-            exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if score > max_score:
                     with open('data\max_score.txt', 'w') as fin:
                         print(str(score), file=fin)
-                my_game()
+                snake_game(sc)
 
 
 def next_key():
@@ -49,7 +65,7 @@ def render_image(snake, apple):
     surface.blit(img, apple)
 
 
-def my_game():
+def snake_game(sc):
     global score, max_score
     global dx, dy, dirs
     x, y = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)
@@ -64,9 +80,8 @@ def my_game():
     dirs = {'W': True, 'S': True, 'A': True, 'D': True}
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
+        if score == aim:
+            return True
 
         render_image(snake, apple)
 
@@ -84,13 +99,14 @@ def my_game():
 
         if x < 0 or x > RES - SIZE or y > RES - SIZE or y < 0 or len(snake) != len(set(snake)):
             while True:
-                render_end = font_end.render('GAME OVER', 1, pygame.Color('blue'))
+                render_end = font_end.render('GAME OVER', True, pygame.Color('blue'))
                 render_p = font_score.render('нажмите пробел для перезапуска', 1, (139, 0, 255))
                 surface.blit(render_end, (RES // 2 - 200, RES // 3))
                 surface.blit(render_p, (RES // 2 - 200, RES // 3 + 100))
                 pygame.display.flip()
-                close_game()
+                close_game(sc)
 
         pygame.display.flip()
-        clock.tick(fps)
         next_key()
+        sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
+        clock.tick(fps)

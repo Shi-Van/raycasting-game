@@ -152,7 +152,7 @@ while True:
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_pos(24.38)
         Continue = True
-    # open big map
+    # open big mapёв
     elif map_open:
         drawing.open_map(bg_image, player.pos)
     # game

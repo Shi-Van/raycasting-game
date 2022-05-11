@@ -4,7 +4,7 @@ pygame.mixer.init()
 
 
 class Button:
-    def __init__(self, sc, width, height, x, y, function, text):
+    def __init__(self, sc, width, height, x, y, function=None, text=None):
         self.sc = sc
         self.rect = pygame.Rect(x, y, width, height)
         self.rect.center = (x, y)
@@ -30,6 +30,10 @@ class Button:
         sc_text = f_sys.render(self.text, True, text_colour)
         pos = sc_text.get_rect(center=self.rect.center)
         surface.blit(sc_text, pos)
+
+    # def slider(self, circle_diameter):
+    #
+
 
 
 # Pause_button

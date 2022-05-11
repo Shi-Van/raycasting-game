@@ -77,7 +77,7 @@ def snake_game(sc):
         for event in pygame.event.get():
             pass
         if score == aim:
-            return True
+            return False
 
         render_image(snake, apple)
 
@@ -107,3 +107,4 @@ def snake_game(sc):
         next_key()
         sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
         clock.tick(fps)
+    return True

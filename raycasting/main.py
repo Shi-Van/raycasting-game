@@ -1,4 +1,4 @@
-from mobs import Mobs
+from mobs import Mobs, CMobs
 from player import Player
 from drawing import *
 from buttons import *
@@ -18,8 +18,9 @@ drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
 map_open = False
-mob = Mobs((3000, 4000), 1)
-mobs = [mob]
+mob = Mobs((2900, 4100), 1)
+mob2 = CMobs((600, 6200), 1)
+mobs = [mob2, mob]
 pause_music = False
 play_music = False
 Continue = False
@@ -157,7 +158,8 @@ while True:
         pygame.mixer.music.unpause()
         player.movement(world_map)
         for mob in mobs:
-            kill = mob.update(player.pos)
+            if mob.mob_distance(player.pos) <= 1600:
+                kill = mob.update(player.pos, world_map)
         # sc.fill(BLACK)
         drawing.background(player.angle)
         drawing.world(player.pos, player.angle, mobs, world_map)

@@ -1,6 +1,7 @@
 from settings import *
 import pygame
 from numba import njit
+from player import collide
 
 
 class Mobs(pygame.sprite.Sprite):
@@ -9,7 +10,7 @@ class Mobs(pygame.sprite.Sprite):
         self.x, self.y = position
         self.speed = mob_speed
         self.type = mob_type
-        self.image = pygame.image.load('images/ваня.png').convert_alpha()
+        self.image = pygame.image.load('images/воловик1.png').convert_alpha()
         self.mob_wight = 40
 
     def mob_distance(self, pl_pos):
@@ -18,7 +19,7 @@ class Mobs(pygame.sprite.Sprite):
     def mob_angle(self, player_position):
         return angle_calc(self.x, self.y, player_position)
 
-    def update(self, player_position):
+    def update(self, player_position, worldmap):
         if self.mob_distance(player_position) < self.mob_wight:
             return True
 
@@ -51,3 +52,28 @@ def dist_calc(x, y, pl_pos):
     pl_x, pl_y = pl_pos
     dist = ((pl_x - x) ** 2 + (pl_y - y) ** 2) ** 0.5
     return dist
+
+
+class CMobs(Mobs):
+    def __init__(self, position, mob_type):
+        pygame.sprite.Sprite.__init__(self)
+        self.x, self.y = position
+        self.speed = mob_speed
+        self.type = mob_type
+        self.image = pygame.image.load('images/юрич.png').convert_alpha()
+        self.mob_wight = 40
+
+    def update(self, player_position, worldmap):
+        if self.mob_distance(player_position) < self.mob_wight:
+            return True
+        cube_x_pos, cube_y_pos = int(self.x // TILE * TILE), int(self.y // TILE * TILE)
+
+        angle = (self.mob_angle(player_position) + math.pi) % (2 * math.pi)
+        delt_y = self.speed * math.sin(angle)
+        delt_x = self.speed * math.cos(angle)
+
+        delt_x, delt_y = collide(delt_y, delt_x, cube_y_pos, cube_x_pos, self.x, self.y, worldmap)
+
+        self.x += delt_x
+        self.y += delt_y
+

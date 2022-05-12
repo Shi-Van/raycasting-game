@@ -1,20 +1,20 @@
 import pygame
 from random import randrange
-from settings import HALF_HEIGHT, HALF_WIDTH
+from settings import HALF_HEIGHT, HALF_WIDTH, WIDTH, HEIGHT
 
 RES = 700
 SIZE = 50
 snake_speed = 10
 pygame.init()
 surface = pygame.Surface((RES, RES))
-aim = 5
+aim = 12
 clock = pygame.time.Clock()
 fps = 60
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 65, bold=True)
 img = pygame.image.load("data\img1.png")
 img = pygame.transform.scale(img, (50, 50))
-img2 = pygame.image.load("data\_cr01mQK8.jpg")
+img2 = pygame.image.load("data\_cr01mQK8.png")
 img2 = pygame.transform.scale(img2, (50, 50))
 img3 = pygame.image.load("data\img3.png")
 img3 = pygame.transform.scale(img3, (40, 40))
@@ -75,7 +75,8 @@ def snake_game(sc):
 
     while True:
         for event in pygame.event.get():
-            pass
+            if event.type == pygame.quit():
+                exit()
         if score == aim:
             return False
 
@@ -107,3 +108,8 @@ def snake_game(sc):
         next_key()
         sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
         clock.tick(fps)
+
+
+if __name__ == '__main__':
+    sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+    snake_game(sc)

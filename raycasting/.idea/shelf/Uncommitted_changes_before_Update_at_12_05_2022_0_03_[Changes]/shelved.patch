@@ -1,0 +1,103 @@
+Index: snake_quest.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom random import randrange\r\nfrom settings import HALF_HEIGHT, HALF_WIDTH\r\n\r\nRES = 700\r\nSIZE = 50\r\nsnake_speed = 10\r\npygame.init()\r\nsurface = pygame.Surface((RES, RES))\r\naim = 10\r\nclock = pygame.time.Clock()\r\nfps = 60\r\nfont_score = pygame.font.SysFont('Arial', 26, bold=True)\r\nfont_end = pygame.font.SysFont('Arial', 65, bold=True)\r\nimg = pygame.image.load(\"data\\img1.png\")\r\nimg = pygame.transform.scale(img, (50, 50))\r\nimg2 = pygame.image.load(\"data\\_cr01mQK8.jpg\")\r\nimg2 = pygame.transform.scale(img2, (50, 50))\r\nimg3 = pygame.image.load(\"data\\img3.png\")\r\nimg3 = pygame.transform.scale(img3, (40, 40))\r\nimg4 = pygame.image.load(\"data\\Visual_Night.jpg\")\r\nimg4 = pygame.transform.scale(img4, (RES, RES))\r\n\r\n\r\ndef close_game(sc):\r\n    global score, max_score\r\n    for event in pygame.event.get():\r\n        if event.type == pygame.KEYDOWN:\r\n            if event.key == pygame.K_SPACE:\r\n                snake_game(sc)\r\n\r\n\r\ndef next_key():\r\n    global dx, dy, dirs\r\n    key = pygame.key.get_pressed()\r\n    if key[pygame.K_w]:\r\n        if dirs['W']:\r\n            dx, dy = 0, -1\r\n            dirs = {'W': True, 'S': False, 'A': True, 'D': True, }\r\n    elif key[pygame.K_s]:\r\n        if dirs['S']:\r\n            dx, dy = 0, 1\r\n            dirs = {'W': False, 'S': True, 'A': True, 'D': True, }\r\n    elif key[pygame.K_a]:\r\n        if dirs['A']:\r\n            dx, dy = -1, 0\r\n            dirs = {'W': True, 'S': True, 'A': True, 'D': False, }\r\n    elif key[pygame.K_d]:\r\n        if dirs['D']:\r\n            dx, dy = 1, 0\r\n            dirs = {'W': True, 'S': True, 'A': False, 'D': True, }\r\n\r\n\r\ndef render_image(snake, apple):\r\n    surface.blit(img4, (0, 0))\r\n    render_score = font_score.render(f'Украдено хекстеков: {score}', True, (139, 0, 255))\r\n    surface.blit(render_score, (5, 5))\r\n    [surface.blit(img3, (i + 5, j + 5)) for i, j in snake[:-1]]\r\n    surface.blit(img2, snake[-1])\r\n    surface.blit(img, apple)\r\n\r\n\r\ndef snake_game(sc):\r\n    global score, max_score\r\n    global dx, dy, dirs\r\n    global aim\r\n    x, y = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)\r\n    apple = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)\r\n    length = 1\r\n    snake = [(x, y)]\r\n    score = 0\r\n    speed_count = 0\r\n    dx, dy = 0, 0\r\n    dirs = {'W': True, 'S': True, 'A': True, 'D': True}\r\n\r\n    while True:\r\n        for event in pygame.event.get():\r\n            pass\r\n        if score == aim:\r\n            return True\r\n\r\n        render_image(snake, apple)\r\n\r\n        speed_count += 1\r\n        if not speed_count % snake_speed:\r\n            x = (x + dx * SIZE)\r\n            y = (y + dy * SIZE)\r\n            snake.append((x, y))\r\n            snake = snake[-length:]\r\n\r\n        if snake[-1] == apple:\r\n            apple = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)\r\n            length += 1\r\n            score += 1\r\n\r\n        if x < 0 or x > RES - SIZE or y > RES - SIZE or y < 0 or len(snake) != len(set(snake)):\r\n            while True:\r\n                render_end = font_end.render('GAME OVER', True, pygame.Color('blue'))\r\n                render_p = font_score.render('нажмите пробел для перезапуска', True, (139, 0, 255))\r\n                surface.blit(render_end, (RES // 2 - 200, RES // 3))\r\n                surface.blit(render_p, (RES // 2 - 200, RES // 3 + 100))\r\n                sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))\r\n                pygame.display.flip()\r\n                close_game(sc)\r\n\r\n        pygame.display.flip()\r\n        next_key()\r\n        sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))\r\n        clock.tick(fps)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/snake_quest.py b/snake_quest.py
+--- a/snake_quest.py	(revision db31abcfc3bf292ef480a7ea97a2ca1fcbe6b688)
++++ b/snake_quest.py	(date 1652301280689)
+@@ -1,6 +1,6 @@
+ import pygame
+ from random import randrange
+-from settings import HALF_HEIGHT, HALF_WIDTH
++from settings import HALF_HEIGHT, HALF_WIDTH, WIDTH, HEIGHT
+ 
+ RES = 700
+ SIZE = 50
+@@ -27,6 +27,9 @@
+     for event in pygame.event.get():
+         if event.type == pygame.KEYDOWN:
+             if event.key == pygame.K_SPACE:
++                if score > max_score:
++                    with open('data\max_score.txt', 'w') as fin:
++                        print(str(score), file=fin)
+                 snake_game(sc)
+ 
+ 
+@@ -53,7 +56,9 @@
+ 
+ def render_image(snake, apple):
+     surface.blit(img4, (0, 0))
+-    render_score = font_score.render(f'Украдено хекстеков: {score}', True, (139, 0, 255))
++    render_max_score = font_score.render(f'рекорд: {max_score}', 1, pygame.Color('blue'))
++    surface.blit(render_max_score, (5, 30))
++    render_score = font_score.render(f'Украдено хекстеков: {score}', 1, (139, 0, 255))
+     surface.blit(render_score, (5, 5))
+     [surface.blit(img3, (i + 5, j + 5)) for i, j in snake[:-1]]
+     surface.blit(img2, snake[-1])
+@@ -63,19 +68,19 @@
+ def snake_game(sc):
+     global score, max_score
+     global dx, dy, dirs
+-    global aim
+     x, y = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)
+     apple = randrange(SIZE, RES - SIZE, SIZE), randrange(SIZE, RES - SIZE, SIZE)
+     length = 1
+     snake = [(x, y)]
++    with open('data\max_score.txt', 'r') as fin:
++        max_score = int(fin.read())
+     score = 0
+     speed_count = 0
+     dx, dy = 0, 0
+     dirs = {'W': True, 'S': True, 'A': True, 'D': True}
+ 
+     while True:
+-        for event in pygame.event.get():
+-            pass
++
+         if score == aim:
+             return True
+ 
+@@ -96,10 +101,9 @@
+         if x < 0 or x > RES - SIZE or y > RES - SIZE or y < 0 or len(snake) != len(set(snake)):
+             while True:
+                 render_end = font_end.render('GAME OVER', True, pygame.Color('blue'))
+-                render_p = font_score.render('нажмите пробел для перезапуска', True, (139, 0, 255))
++                render_p = font_score.render('нажмите пробел для перезапуска', 1, (139, 0, 255))
+                 surface.blit(render_end, (RES // 2 - 200, RES // 3))
+                 surface.blit(render_p, (RES // 2 - 200, RES // 3 + 100))
+-                sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
+                 pygame.display.flip()
+                 close_game(sc)
+ 
+@@ -107,3 +111,8 @@
+         next_key()
+         sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
+         clock.tick(fps)
++
++
++if __name__ == '__main__':
++    sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
++    snake_game(sc)
+\ No newline at end of file
+Index: settings.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import math\r\nfrom screeninfo import get_monitors\r\n\r\n# game settings\r\nWIDTH = 0\r\nHEIGHT = 0\r\nfor m in get_monitors():\r\n    WIDTH = m.width if m.width > WIDTH else WIDTH\r\n    HEIGHT = m.height if m.height > HEIGHT else HEIGHT\r\nHALF_WIDTH = WIDTH // 2\r\nHALF_HEIGHT = HEIGHT // 2\r\nFPS = 60\r\nTILE = 100\r\nFPS_POS = (35, 5)\r\nview_range = 3300\r\nsensitivity = 800\r\n\r\n# minimap settings\r\nMAP_SCALE = 5\r\nMAP_TILE = TILE // MAP_SCALE\r\nMAP_SIZE = MAP_TILE * 10\r\nHALF_MAP_SIZE = MAP_SIZE // 2\r\n\r\n# ray casting settings\r\nFOV = math.pi / 3\r\nHALF_FOV = FOV / 2\r\nNUM_RAYS = 540\r\nwhile WIDTH % NUM_RAYS != 0:\r\n    NUM_RAYS -= 10\r\nprint(NUM_RAYS)\r\nMAX_DEPTH = 800\r\nDELTA_ANGLE = FOV / NUM_RAYS\r\nDIST = WIDTH / (8 * math.tan(HALF_FOV))\r\nPROJ_COEF = 4.4 * DIST * TILE\r\nSCALE = WIDTH // NUM_RAYS\r\n\r\n# player settings\r\nplayer_pos = (5700, 6400)\r\nplayer_angle = 1.5 * math.pi\r\nplayer_speed_system = 6\r\nrotation_speed = 0.005\r\nplayer_width = 25\r\nplayer_half_width = player_width / 2\r\ncube_angle_width = player_width // 3\r\nsens_koef = sensitivity / 800 ** 2\r\n\r\nTEXTURE_WIDTH = 1200\r\nTEXTURE_HEIGHT = 1200\r\nTEXTURE_SCALE = TEXTURE_WIDTH // TILE\r\n\r\n\r\n# colors\r\nWHITE = (255, 255, 255)\r\nBLACK = (0, 0, 0)\r\nRED = (220, 0, 0)\r\nGREEN = (0, 80, 0)\r\nBLUE = (0, 0, 255)\r\nDARKGREY = (40, 40, 40)\r\nPURPLE = (120, 0, 120)\r\nSKYBLUE = (0, 186, 255)\r\nYELLOW = (220, 220, 0)\r\nLIGHTGREY = (80, 80, 80)\r\nGREY = (70, 70, 70)\r\nnot_active_colour, active_colour = LIGHTGREY, GREY\r\n\r\nind_hit = [(1, 1), (-1, -1), (0, 1), (1, 0), (0, -1), (-1, 0), (1, -1), (-1, 1)]\r\n\r\n# mobs\r\nmob_speed = 6\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.py b/settings.py
+--- a/settings.py	(revision db31abcfc3bf292ef480a7ea97a2ca1fcbe6b688)
++++ b/settings.py	(date 1652302448553)
+@@ -24,7 +24,7 @@
+ # ray casting settings
+ FOV = math.pi / 3
+ HALF_FOV = FOV / 2
+-NUM_RAYS = 540
++NUM_RAYS = 100
+ while WIDTH % NUM_RAYS != 0:
+     NUM_RAYS -= 10
+ print(NUM_RAYS)

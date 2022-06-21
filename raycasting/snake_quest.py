@@ -1,6 +1,6 @@
 import pygame
 from random import randrange
-from settings import HALF_HEIGHT, HALF_WIDTH, WIDTH, HEIGHT
+from settings import HALF_HEIGHT, HALF_WIDTH
 
 RES = 700
 SIZE = 50
@@ -12,11 +12,11 @@ clock = pygame.time.Clock()
 fps = 60
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 65, bold=True)
-img = pygame.image.load("data\img1.png")
+img = pygame.image.load("images\ваня.png")
 img = pygame.transform.scale(img, (50, 50))
 img2 = pygame.image.load("data\_cr01mQK8.png")
 img2 = pygame.transform.scale(img2, (50, 50))
-img3 = pygame.image.load("data\img3.png")
+img3 = pygame.image.load("images\ваня.png")
 img3 = pygame.transform.scale(img3, (40, 40))
 img4 = pygame.image.load("data\Visual_Night.jpg")
 img4 = pygame.transform.scale(img4, (RES, RES))
@@ -27,8 +27,9 @@ def close_game(sc):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                snake_game(sc)
-
+                x = snake_game(sc)
+                if not x:
+                    return True
 
 def next_key():
     global dx, dy, dirs
@@ -53,7 +54,7 @@ def next_key():
 
 def render_image(snake, apple):
     surface.blit(img4, (0, 0))
-    render_score = font_score.render(f'Украдено хекстеков: {score}', True, (139, 0, 255))
+    render_score = font_score.render(f'младенцев избито: {score}', True, (139, 0, 255))
     surface.blit(render_score, (5, 5))
     [surface.blit(img3, (i + 5, j + 5)) for i, j in snake[:-1]]
     surface.blit(img2, snake[-1])
@@ -75,8 +76,7 @@ def snake_game(sc):
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.quit():
-                exit()
+            pass
         if score == aim:
             return False
 
@@ -102,14 +102,10 @@ def snake_game(sc):
                 surface.blit(render_p, (RES // 2 - 200, RES // 3 + 100))
                 sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
                 pygame.display.flip()
-                close_game(sc)
+                if close_game(sc):
+                    return False
 
         pygame.display.flip()
         next_key()
         sc.blit(surface, (HALF_WIDTH - (RES // 2), HALF_HEIGHT - (RES // 2)))
         clock.tick(fps)
-
-
-if __name__ == '__main__':
-    sc = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
-    snake_game(sc)

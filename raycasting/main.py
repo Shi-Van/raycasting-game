@@ -18,10 +18,10 @@ drawing = Drawing(sc, sc_map)
 pygame.mouse.set_visible(False)
 paused = False
 map_open = False
-# mob = Mobs((2900, 4100), 1)
-# mob2 = CMobs((600, 6200), 1)
-# mobs = [mob, mob2]
-mobs = []
+mob = Mobs((2900, 4100), 1)
+mob2 = CMobs((600, 6200), 1)
+mobs = [mob, mob2]
+# mobs = []
 pause_music = False
 play_music = False
 Continue = False

@@ -20,8 +20,8 @@ paused = False
 map_open = False
 mob = Mobs((2900, 4100), 1)
 mob2 = CMobs((600, 6200), 1)
-mobs = [mob, mob2]
-# mobs = []
+# mobs = [mob, mob2]
+mobs = []
 pause_music = False
 play_music = False
 Continue = False
@@ -114,7 +114,7 @@ while True:
 
     # music in different modes
     if not play_music and not paused:
-        pygame.mixer.music.load('music\doom.mp3')
+        pygame.mixer.music.load('music/doom.mp3')
         pygame.mixer.music.set_volume(vol)
         if First:
             vol -= 0.5
@@ -123,7 +123,7 @@ while True:
         pygame.mixer.music.play(-1)
         play_music = True
     if paused and not pause_music:
-        pygame.mixer.music.load('music\Alexander Nakarada - Chase.mp3')
+        pygame.mixer.music.load('music/Alexander Nakarada - Chase.mp3')
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_pos(4.38)
         play_music = False
@@ -139,7 +139,7 @@ while True:
     elif kill:
         fail()
         if not Continue:
-            pygame.mixer.music.load('music\Iogann_Sebastyan_Bakh_-_Tokkata_i_fuga_re_minor_organ_-_Valter_Kraft_68309978.mp3')
+            pygame.mixer.music.load('music/Iogann_Sebastyan_Bakh_-_Tokkata_i_fuga_re_minor_organ_-_Valter_Kraft_68309978.mp3')
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_pos(1.0)
         Continue = True
@@ -147,7 +147,7 @@ while True:
     elif 8025 <= player.pos[0] <= 8175 and 125 <= player.pos[1] <= 310:
         win()
         if not Continue:
-            pygame.mixer.music.load('music\gta-san-andreas-opening-intro.mp3')
+            pygame.mixer.music.load('music/gta-san-andreas-opening-intro.mp3')
             pygame.mixer.music.play(-1)
             pygame.mixer.music.set_pos(24.38)
         Continue = True

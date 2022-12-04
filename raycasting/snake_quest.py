@@ -12,13 +12,13 @@ clock = pygame.time.Clock()
 fps = 60
 font_score = pygame.font.SysFont('Arial', 26, bold=True)
 font_end = pygame.font.SysFont('Arial', 65, bold=True)
-img = pygame.image.load("images\ваня.png")
+img = pygame.image.load("images/ваня.png")
 img = pygame.transform.scale(img, (50, 50))
-img2 = pygame.image.load("data\_cr01mQK8.png")
+img2 = pygame.image.load("data/_cr01mQK8.png")
 img2 = pygame.transform.scale(img2, (50, 50))
-img3 = pygame.image.load("images\ваня.png")
+img3 = pygame.image.load("images/ваня.png")
 img3 = pygame.transform.scale(img3, (40, 40))
-img4 = pygame.image.load("data\Visual_Night.jpg")
+img4 = pygame.image.load("data/Visual_Night.jpg")
 img4 = pygame.transform.scale(img4, (RES, RES))
 
 
